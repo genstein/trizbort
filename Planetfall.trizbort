@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="utf-8"?>
+<trizbort>
+	<info>
+		<title>Planetfall</title>
+		<author>Genstein</author>
+		<description>A complete map of Planetfall, created with Trizbort.</description>
+	</info>
+	<map>
+		<room id="1" name="Deck Nine" x="-96" y="-48" w="128" h="64">
+			<objects>(ambassador)</objects>
+		</room>
+		<line id="2">
+			<dock index="0" id="1" port="e" />
+			<dock index="1" id="8" port="w" />
+		</line>
+		<line id="3" style="dashed" flow="oneWay">
+			<dock index="0" id="1" port="w" />
+			<dock index="1" id="9" port="ene" />
+		</line>
+		<room id="4" name="Gangway" x="-96" y="-176" w="128" h="64" />
+		<line id="5" startText="up" endText="down">
+			<dock index="0" id="4" port="s" />
+			<dock index="1" id="1" port="n" />
+		</line>
+		<line id="6">
+			<dock index="0" id="4" port="n" />
+			<dock index="1" id="7" port="s" />
+		</line>
+		<room id="7" name="Deck Eight" x="-96" y="-288" w="128" h="64">
+			<objects>Ensign Blather</objects>
+		</room>
+		<room id="8" name="Reactor Lobby" x="96" y="-48" w="128" h="64">
+			<objects>Ensign Blather</objects>
+		</room>
+		<room id="9" name="Escape Pod" x="-288" y="-32" w="128" h="64">
+			<objects>safety webbing|(survival kit)|(towel)</objects>
+		</room>
+		<line id="10" style="dashed" flow="oneWay">
+			<dock index="0" id="9" port="ese" />
+			<dock index="1" id="11" port="nw" />
+		</line>
+		<room id="11" name="Underwater" x="368" y="224" w="128" h="64" />
+		<room id="12" name="Crag" x="368" y="96" w="128" h="64" />
+		<line id="13" flow="oneWay" startText="down" endText="up">
+			<dock index="0" id="11" port="n" />
+			<dock index="1" id="12" port="s" />
+		</line>
+		<room id="14" name="Balcony" x="368" y="-32" w="128" h="64">
+			<objects at="e">plaque</objects>
+		</room>
+		<line id="15" startText="down" endText="up">
+			<dock index="0" id="12" port="n" />
+			<dock index="1" id="14" port="s" />
+		</line>
+		<room id="16" name="Winding Stair" x="368" y="-160" w="128" h="64">
+			<objects at="e" />
+		</room>
+		<line id="17" startText="down" endText="up">
+			<dock index="0" id="14" port="n" />
+			<dock index="1" id="16" port="s" />
+		</line>
+		<room id="18" name="Courtyard" x="368" y="-288" w="128" h="64">
+			<objects at="e" />
+		</room>
+		<line id="19" startText="down" endText="up">
+			<dock index="0" id="16" port="n" />
+			<dock index="1" id="18" port="s" />
+		</line>
+		<room id="20" name="Plain Hall" x="368" y="-416" w="128" h="64">
+			<objects at="e" />
+		</room>
+		<room id="21" name="West Wing" x="176" y="-288" w="128" h="64">
+			<objects at="e" />
+		</room>
+		<line id="22">
+			<dock index="0" id="18" port="w" />
+			<dock index="1" id="21" port="e" />
+		</line>
+		<line id="23">
+			<dock index="0" id="18" port="n" />
+			<dock index="1" id="20" port="s" />
+		</line>
+		<line id="24">
+			<dock index="0" id="20" port="n" />
+			<dock index="1" id="26" port="s" />
+		</line>
+		<line id="25">
+			<dock index="0" id="20" port="ne" />
+			<dock index="1" id="29" port="sw" />
+		</line>
+		<room id="26" name="Rec Area" x="368" y="-544" w="128" h="64">
+			<objects at="nw">door|dial</objects>
+		</room>
+		<line id="27" style="dashed" midText="741">
+			<dock index="0" id="26" port="n" />
+			<dock index="1" id="178" port="s" />
+		</line>
+		<line id="28">
+			<dock index="0" id="26" port="e" />
+			<dock index="1" id="29" port="w" />
+		</line>
+		<room id="29" name="Rec Corridor" x="560" y="-544" w="128" h="64">
+			<objects at="nw" />
+		</room>
+		<line id="30">
+			<dock index="0" id="29" port="n" />
+			<dock index="1" id="33" port="s" />
+		</line>
+		<line id="31">
+			<dock index="0" id="29" port="s" />
+			<dock index="1" id="36" port="n" />
+		</line>
+		<line id="32">
+			<dock index="0" id="29" port="e" />
+			<dock index="1" id="39" port="w" />
+		</line>
+		<room id="33" name="Dorm B" x="560" y="-672" w="128" h="64">
+			<objects at="nw" />
+		</room>
+		<room id="34" name="SanFac B" x="560" y="-800" w="128" h="64">
+			<objects at="nw" />
+		</room>
+		<line id="35">
+			<dock index="0" id="33" port="n" />
+			<dock index="1" id="34" port="s" />
+		</line>
+		<room id="36" name="Dorm A" x="560" y="-416" w="128" h="64">
+			<objects at="nw" />
+		</room>
+		<room id="37" name="SanFac A" x="560" y="-288" w="128" h="64">
+			<objects at="nw" />
+		</room>
+		<line id="38">
+			<dock index="0" id="36" port="s" />
+			<dock index="1" id="37" port="n" />
+		</line>
+		<room id="39" name="Mess Corridor" x="752" y="-544" w="128" h="64">
+			<objects at="n">small door|padlock</objects>
+		</room>
+		<line id="40" style="dashed">
+			<dock index="0" id="39" port="n" />
+			<dock index="1" id="98" port="s" />
+		</line>
+		<line id="41">
+			<dock index="0" id="39" port="s" />
+			<dock index="1" id="43" port="n" />
+		</line>
+		<line id="42">
+			<dock index="0" id="39" port="e" />
+			<dock index="1" id="45" port="w" />
+		</line>
+		<room id="43" name="Mess Hall" x="752" y="-416" w="128" h="64">
+			<objects>octagonal canteen|door|slot</objects>
+		</room>
+		<line id="44" style="dashed">
+			<dock index="0" id="43" port="s" />
+			<dock index="1" id="108" port="n" />
+		</line>
+		<room id="45" name="Dorm Corridor" x="944" y="-544" w="128" h="64">
+			<objects at="se" />
+		</room>
+		<line id="46">
+			<dock index="0" id="45" port="n" />
+			<dock index="1" id="49" port="s" />
+		</line>
+		<line id="47">
+			<dock index="0" id="45" port="s" />
+			<dock index="1" id="52" port="n" />
+		</line>
+		<line id="48" midText="...motorized...walkway...(disabled)">
+			<dock index="0" id="45" port="e" />
+			<dock index="1" id="55" port="w" />
+		</line>
+		<room id="49" name="Dorm D" x="944" y="-672" w="128" h="64">
+			<objects at="se" />
+		</room>
+		<room id="50" name="SanFac D" x="944" y="-800" w="128" h="64">
+			<objects at="se" />
+		</room>
+		<line id="51">
+			<dock index="0" id="49" port="n" />
+			<dock index="1" id="50" port="s" />
+		</line>
+		<room id="52" name="Dorm C" x="944" y="-416" w="128" h="64">
+			<objects at="se" />
+		</room>
+		<room id="53" name="SanFac C" x="944" y="-288" w="128" h="64">
+			<objects at="se" />
+		</room>
+		<line id="54">
+			<dock index="0" id="52" port="s" />
+			<dock index="1" id="53" port="n" />
+		</line>
+		<room id="55" name="Corridor Junction" x="1392" y="-544" w="128" h="64" />
+		<line id="56">
+			<dock index="0" id="55" port="n" />
+			<dock index="1" id="59" port="s" />
+		</line>
+		<line id="57">
+			<dock index="0" id="55" port="s" />
+			<dock index="1" id="68" port="n" />
+		</line>
+		<line id="58">
+			<dock index="0" id="95" port="w" />
+			<point index="1" x="1520" y="-512" />
+		</line>
+		<room id="59" name="Admin Corridor South" x="1392" y="-672" w="128" h="64">
+			<objects>crevice|    (shiny steel key)</objects>
+		</room>
+		<line id="60">
+			<dock index="0" id="66" port="w" />
+			<point index="1" x="1520" y="-640" />
+		</line>
+		<line id="61">
+			<dock index="0" id="59" port="n" />
+			<dock index="1" id="62" port="s" />
+		</line>
+		<room id="62" name="Admin Corridor" x="1392" y="-800" w="128" h="64">
+			<objects at="nw">gaping rift|rubble</objects>
+		</room>
+		<line id="63" style="dashed" midText="via extended ladder">
+			<dock index="0" id="62" port="n" />
+			<dock index="1" id="99" port="s" />
+		</line>
+		<line id="64">
+			<dock index="0" id="62" port="w" />
+			<dock index="1" id="65" port="e" />
+		</line>
+		<room id="65" name="Systems Monitors" x="1152" y="-800" w="128" h="64">
+			<objects>"library" (green)|"reactors" (green)|"life support" (green)|"planetary defense" (red)|"planetary course control" (red)|"communications" (red)|"project control" (red)</objects>
+		</room>
+		<room id="66" name="SanFac E" x="1584" y="-672" w="128" h="64">
+			<objects at="ne" />
+		</room>
+		<room id="68" name="Mech Corridor North" x="1392" y="-416" w="128" h="64">
+			<objects at="ne" />
+		</room>
+		<line id="69">
+			<dock index="0" id="68" port="e" />
+			<dock index="1" id="94" port="w" />
+		</line>
+		<line id="70" flow="oneWay">
+			<dock index="0" id="68" port="w" />
+			<dock index="1" id="72" port="e" />
+		</line>
+		<line id="71">
+			<dock index="0" id="68" port="s" />
+			<dock index="1" id="74" port="n" />
+		</line>
+		<room id="72" name="Physical Plant" x="1200" y="-368" w="128" h="80">
+			<objects at="ne" />
+		</room>
+		<line id="73" flow="oneWay">
+			<dock index="0" id="72" port="ne" />
+			<dock index="1" id="68" port="wnw" />
+		</line>
+		<room id="74" name="Mech Corridor" x="1392" y="-288" w="128" h="64">
+			<objects at="ne" />
+		</room>
+		<line id="75" flow="oneWay">
+			<dock index="0" id="74" port="wnw" />
+			<dock index="1" id="72" port="e" />
+		</line>
+		<line id="76" flow="oneWay">
+			<dock index="0" id="72" port="se" />
+			<dock index="1" id="74" port="w" />
+		</line>
+		<line id="77">
+			<dock index="0" id="74" port="e" />
+			<dock index="1" id="88" port="w" />
+		</line>
+		<line id="78">
+			<dock index="0" id="74" port="s" />
+			<dock index="1" id="79" port="n" />
+		</line>
+		<room id="79" name="Mech Corridor South" x="1392" y="-160" w="128" h="64">
+			<objects at="ne" />
+		</room>
+		<line id="80">
+			<dock index="0" id="79" port="sw" />
+			<dock index="1" id="83" port="ne" />
+		</line>
+		<line id="81">
+			<dock index="0" id="79" port="s" />
+			<dock index="1" id="85" port="n" />
+		</line>
+		<line id="82">
+			<dock index="0" id="79" port="se" />
+			<dock index="1" id="87" port="nw" />
+		</line>
+		<room id="83" name="Tool Room" x="1200" y="-32" w="128" h="64">
+			<objects>large glass flask|ACME Portable Laser|    old battery|magnet|wide-nosed pliers||</objects>
+		</room>
+		<line id="84">
+			<dock index="0" id="83" port="e" />
+			<dock index="1" id="85" port="w" />
+		</line>
+		<room id="85" name="Machine Shop" x="1392" y="-32" w="128" h="64">
+			<objects>chemical dispenser|    coolants 1-4|    catalysts 1-4|    base|    acid|</objects>
+		</room>
+		<line id="86">
+			<dock index="0" id="85" port="e" />
+			<dock index="1" id="87" port="w" />
+		</line>
+		<room id="87" name="Robot Shop" x="1584" y="-32" w="128" h="64">
+			<objects>robot (Floyd)|    (lower elevator access card)</objects>
+		</room>
+		<room id="88" name="Reactor Control" x="1584" y="-288" w="128" h="64">
+			<objects>metal door|button</objects>
+		</room>
+		<line id="89">
+			<dock index="0" id="88" port="e" />
+			<dock index="1" id="92" port="w" />
+		</line>
+		<room id="90" name="???" x="1776" y="-160" w="128" h="64" isDark="yes" />
+		<line id="91" startText="up" endText="down">
+			<dock index="0" id="88" port="ssw" />
+			<dock index="1" id="90" port="w" />
+		</line>
+		<room id="92" name="Reactor Elevator" x="1776" y="-288" w="128" h="64">
+			<objects>up button|down button|slot</objects>
+		</room>
+		<line id="93" style="dashed" startText="up" endText="down">
+			<dock index="0" id="92" port="e" />
+			<point index="1" x="2000" y="96" />
+		</line>
+		<room id="94" name="Storage Room" x="1584" y="-416" w="128" h="64">
+			<objects at="e">small oil can|small cardboard box|    cracked 17cm fromitz board|    good 90 ohm bedistor|    K-series megafuse|    B-series megafuse</objects>
+		</room>
+		<room id="95" name="Elevator Lobby" x="1984" y="-544" w="128" h="64">
+			<objects at="sw">blue metal door (north)|blue button|red metal door (south)|red button</objects>
+		</room>
+		<room id="96" name="Booth 2" x="2192" y="-544" w="128" h="64">
+			<objects>slot|brown "1" button|tan "3" button</objects>
+		</room>
+		<line id="97">
+			<dock index="0" id="95" port="e" />
+			<dock index="1" id="96" port="w" />
+		</line>
+		<line id="67" style="dashed">
+			<dock index="0" id="96" port="e" />
+			<dock index="1" id="175" port="nnw" />
+		</line>
+		<room id="98" name="Storage West" x="752" y="-672" w="128" h="64">
+			<objects at="n">unopened tin of spam and eggs|extendable ladder</objects>
+		</room>
+		<room id="99" name="Admin Corridor North" x="1392" y="-928" w="128" h="64" />
+		<line id="100">
+			<dock index="0" id="99" port="e" />
+			<dock index="1" id="103" port="w" />
+		</line>
+		<line id="101">
+			<dock index="0" id="99" port="n" />
+			<dock index="1" id="104" port="s" />
+		</line>
+		<line id="102">
+			<dock index="0" id="99" port="w" />
+			<dock index="1" id="105" port="e" />
+		</line>
+		<room id="103" name="Plan Room" x="1568" y="-928" w="128" h="64">
+			<objects>map of the Kalamotee complex|map of the Lawanda complex</objects>
+		</room>
+		<room id="104" name="??? (Transportation Storage?)" x="1392" y="-1056" w="128" h="80" isDark="yes">
+			<objects>helicopter access card?|control panel (orange) key?</objects>
+		</room>
+		<room id="105" name="Small Office" x="1152" y="-928" w="128" h="64">
+			<objects at="n">small desk|    drawer|        kitchen access card|        upper elevator access card</objects>
+		</room>
+		<room id="106" name="Large Office" x="944" y="-928" w="128" h="64">
+			<objects>picture window|wide wooden desk|    shuttle access card</objects>
+		</room>
+		<line id="107">
+			<dock index="0" id="105" port="w" />
+			<dock index="1" id="106" port="e" />
+		</line>
+		<room id="108" name="Kitchen" x="752" y="-288" w="128" h="64">
+			<objects>high protein liquid dispenser|    octagonal niche|    button</objects>
+		</room>
+		<line id="109" startText="out" endText="in">
+			<dock index="0" id="95" port="n" />
+			<dock index="1" id="112" port="s" />
+		</line>
+		<line id="110" startText="out" endText="in">
+			<dock index="0" id="95" port="s" />
+			<dock index="1" id="111" port="n" />
+		</line>
+		<room id="111" name="Lower Elevator" x="1984" y="-160" w="128" h="64">
+			<objects>up button|down button|slot</objects>
+		</room>
+		<room id="112" name="Upper Elevator" x="1984" y="-928" w="128" h="64">
+			<objects at="n">up button|down button|slot</objects>
+		</room>
+		<room id="113" name="Tower Core" x="2384" y="-800" w="128" h="64">
+			<objects at="n" />
+		</room>
+		<line id="114" style="dashed" startText="in" endText="out">
+			<dock index="0" id="112" port="sse" />
+			<dock index="1" id="113" port="n" />
+		</line>
+		<line id="115">
+			<dock index="0" id="113" port="ne" />
+			<dock index="1" id="119" port="sw" />
+		</line>
+		<line id="116">
+			<dock index="0" id="113" port="sw" />
+			<dock index="1" id="118" port="ne" />
+		</line>
+		<line id="117" startText="down" endText="up">
+			<dock index="0" id="113" port="nne" />
+			<dock index="1" id="120" port="sse" />
+		</line>
+		<room id="118" name="Observation Deck" x="2192" y="-672" w="128" h="64">
+			<objects at="n" />
+		</room>
+		<room id="119" name="Comm Room" x="2576" y="-928" w="128" h="64">
+			<objects>receive station console|    transmission received light|    message playback button|send station console|    screen|    enunciator|    funnel (coolant system manual override)|    coloured light (brown)</objects>
+		</room>
+		<room id="120" name="Helipad" x="2384" y="-928" w="128" h="64">
+			<objects at="n">helicopter</objects>
+		</room>
+		<room id="121" name="Helicopter" x="2384" y="-1056" w="128" h="64">
+			<objects>complex control panel (requires orange key?)</objects>
+		</room>
+		<line id="122">
+			<dock index="0" id="120" port="n" />
+			<dock index="1" id="121" port="s" />
+		</line>
+		<room id="123" name="Waiting Area" x="2192" y="-288" w="128" h="64" />
+		<line id="124" style="dashed" startText="in" endText="out">
+			<dock index="0" id="111" port="nne" />
+			<dock index="1" id="123" port="s" />
+		</line>
+		<room id="125" name="Kalamontee Platform" x="2400" y="-288" w="128" h="64" />
+		<line id="126">
+			<dock index="0" id="123" port="e" />
+			<dock index="1" id="125" port="w" />
+		</line>
+		<line id="127">
+			<dock index="0" id="125" port="s" />
+			<dock index="1" id="128" port="nnw" />
+		</line>
+		<room id="128" name="Shuttle Car Alfie" x="2688" y="-160" w="128" h="64" />
+		<room id="129" name="Alfie Control West" x="2496" y="-160" w="128" h="64">
+			<objects>slot|lever|display</objects>
+		</room>
+		<line id="130">
+			<dock index="0" id="129" port="e" />
+			<dock index="1" id="128" port="w" />
+		</line>
+		<room id="131" name="Alfie Control East" x="2880" y="-160" w="128" h="64">
+			<objects>slot|lever|display</objects>
+		</room>
+		<line id="132">
+			<dock index="0" id="128" port="e" />
+			<dock index="1" id="131" port="w" />
+		</line>
+		<room id="134" name="Lawanda Platform" x="2976" y="-288" w="128" h="64" />
+		<room id="135" name="Escalator" x="3168" y="-288" w="128" h="64" />
+		<room id="133" name="Shuttle Car Betty" x="2688" y="-416" w="128" h="64" />
+		<line id="136" style="dashed">
+			<dock index="0" id="133" port="ssw" />
+			<dock index="1" id="125" port="n" />
+		</line>
+		<line id="137">
+			<dock index="0" id="133" port="sse" />
+			<dock index="1" id="134" port="nnw" />
+		</line>
+		<line id="138" style="dashed">
+			<dock index="0" id="128" port="nne" />
+			<dock index="1" id="134" port="ssw" />
+		</line>
+		<room id="139" name="Betty Control West" x="2496" y="-416" w="128" h="64" />
+		<line id="140">
+			<dock index="0" id="139" port="e" />
+			<dock index="1" id="133" port="w" />
+		</line>
+		<room id="141" name="Betty Control East" x="2880" y="-416" w="128" h="64" />
+		<line id="142">
+			<dock index="0" id="133" port="e" />
+			<dock index="1" id="141" port="w" />
+		</line>
+		<line id="143">
+			<dock index="0" id="134" port="e" />
+			<dock index="1" id="135" port="w" />
+		</line>
+		<room id="144" name="Fork" x="3360" y="-288" w="128" h="64" />
+		<line id="145">
+			<dock index="0" id="135" port="e" />
+			<dock index="1" id="144" port="w" />
+		</line>
+		<line id="146">
+			<dock index="0" id="144" port="ne" />
+			<dock index="1" id="187" port="sw" />
+		</line>
+		<line id="147">
+			<dock index="0" id="144" port="se" />
+			<dock index="1" id="148" port="nw" />
+		</line>
+		<room id="148" name="Project Corridor West" x="3552" y="-160" w="128" h="64" />
+		<line id="149">
+			<dock index="0" id="148" port="e" />
+			<dock index="1" id="152" port="w" />
+		</line>
+		<line id="150">
+			<dock index="0" id="148" port="w" />
+			<dock index="1" id="151" port="e" />
+		</line>
+		<room id="151" name="SanFac F" x="3360" y="-160" w="128" h="64" />
+		<room id="152" name="Project Corridor" x="3744" y="-160" w="128" h="64" />
+		<line id="153">
+			<dock index="0" id="152" port="s" />
+			<dock index="1" id="155" port="n" />
+		</line>
+		<line id="154">
+			<dock index="0" id="152" port="e" />
+			<dock index="1" id="168" port="w" />
+		</line>
+		<room id="155" name="ProjCon Office" x="3744" y="-32" w="128" h="64">
+			<objects>logo|garish mural</objects>
+		</room>
+		<line id="156">
+			<dock index="0" id="155" port="e" />
+			<dock index="1" id="157" port="w" />
+		</line>
+		<room id="157" name="Computer Room" x="3936" y="-32" w="128" h="64">
+			<objects>pile of computer output|glowing red light</objects>
+		</room>
+		<room id="158" name="Miniaturization Booth" x="3936" y="96" w="128" h="64">
+			<objects at="se">small slot|keyboard with numeric keys</objects>
+		</room>
+		<line id="159">
+			<dock index="0" id="157" port="s" />
+			<dock index="1" id="158" port="n" />
+		</line>
+		<line id="160">
+			<dock index="0" id="157" port="n" />
+			<dock index="1" id="168" port="s" />
+		</line>
+		<line id="161">
+			<dock index="0" id="157" port="ne" />
+			<dock index="1" id="162" port="sw" />
+		</line>
+		<room id="162" name="Main Lab" x="4160" y="-160" w="128" h="64" />
+		<line id="163">
+			<dock index="0" id="162" port="ne" />
+			<dock index="1" id="197" port="sw" />
+		</line>
+		<line id="164">
+			<dock index="0" id="162" port="se" />
+			<dock index="1" id="202" port="nw" />
+		</line>
+		<line id="165">
+			<dock index="0" id="162" port="s" />
+			<dock index="1" id="167" port="n" />
+		</line>
+		<line id="166">
+			<dock index="0" id="162" port="w" />
+			<dock index="1" id="168" port="e" />
+		</line>
+		<room id="167" name="Lab Storage" x="4160" y="-32" w="128" h="64">
+			<objects>pale blue lab uniform|    pocket (non-descript logo)|        "combination to conference room: 741"|        teleportation access card|fresh laser battery</objects>
+		</room>
+		<room id="168" name="Project Corridor East" x="3936" y="-160" w="128" h="64" />
+		<line id="169">
+			<dock index="0" id="168" port="n" />
+			<dock index="1" id="170" port="s" />
+		</line>
+		<room id="170" name="Library Lobby" x="3936" y="-288" w="128" h="64">
+			<objects>green spool (heli. operating manual)|computer terminal</objects>
+		</room>
+		<line id="171">
+			<dock index="0" id="170" port="n" />
+			<dock index="1" id="181" port="s" />
+		</line>
+		<line id="172">
+			<dock index="0" id="170" port="w" />
+			<dock index="1" id="174" port="e" />
+		</line>
+		<line id="173">
+			<dock index="0" id="170" port="e" />
+			<dock index="1" id="175" port="w" />
+		</line>
+		<room id="174" name="Library" x="3744" y="-288" w="128" h="64">
+			<objects>machine|    screen|    circular opening</objects>
+		</room>
+		<room id="175" name="Booth 3" x="4160" y="-288" w="128" h="64">
+			<objects>brown "1" button|beige "2" button</objects>
+		</room>
+		<line id="176" style="dashed">
+			<dock index="0" id="175" port="nne" />
+			<dock index="1" id="179" port="ne" />
+		</line>
+		<line id="177" style="dashed">
+			<dock index="0" id="96" port="nw" />
+			<dock index="1" id="179" port="se" />
+		</line>
+		<room id="178" name="Conference Room" x="368" y="-672" w="128" h="64">
+			<objects>door</objects>
+		</room>
+		<room id="179" name="Booth 1" x="368" y="-800" w="128" h="64">
+			<objects>beige "2" button|tan "3" button</objects>
+		</room>
+		<line id="180">
+			<dock index="0" id="179" port="s" />
+			<dock index="1" id="178" port="n" />
+		</line>
+		<room id="181" name="Systems Corridor East" x="3936" y="-416" w="128" h="64" />
+		<line id="182">
+			<dock index="0" id="181" port="n" />
+			<dock index="1" id="195" port="s" />
+		</line>
+		<line id="183">
+			<dock index="0" id="181" port="e" />
+			<dock index="1" id="196" port="w" />
+		</line>
+		<line id="184">
+			<dock index="0" id="181" port="w" />
+			<dock index="1" id="185" port="e" />
+		</line>
+		<room id="185" name="Systems Corridor" x="3744" y="-416" w="128" h="64" />
+		<line id="186">
+			<dock index="0" id="185" port="n" />
+			<dock index="1" id="194" port="s" />
+		</line>
+		<room id="187" name="Systems Corridor West" x="3552" y="-416" w="128" h="64" />
+		<line id="188">
+			<dock index="0" id="187" port="nw" />
+			<dock index="1" id="193" port="se" />
+		</line>
+		<line id="189" startText="up" endText="down">
+			<dock index="0" id="187" port="n" />
+			<dock index="1" id="191" port="s" />
+		</line>
+		<line id="190">
+			<dock index="0" id="187" port="e" />
+			<dock index="1" id="185" port="w" />
+		</line>
+		<room id="191" name="Repair Room" x="3568" y="-544" w="128" h="64">
+			<objects at="n">broken robot (Achilles)|robot-sized doorway|    (17 cm fromitz board)</objects>
+		</room>
+		<line id="192" style="dashed" flow="oneWay" midText="Floyd">
+			<dock index="0" id="191" port="n" />
+			<dock index="1" id="191" port="nw" />
+		</line>
+		<room id="193" name="Infirmary" x="3328" y="-544" w="128" h="64">
+			<objects at="n">beds|red spool (disease symptoms)|transulcent bottle|    label|    medicine|(medical robot breastplate)</objects>
+		</room>
+		<room id="194" name="Planetary Defense" x="3744" y="-544" w="128" h="64">
+			<objects at="n">lights and controls|access panel|    4 17 cm fromitz boards (second one fried)</objects>
+		</room>
+		<room id="195" name="Course Control" x="3936" y="-544" w="128" h="64">
+			<objects>failure lights|large metal cube|    fused 90 ohm bedistor</objects>
+		</room>
+		<room id="196" name="Physical Plant" x="4160" y="-416" w="128" h="64" />
+		<room id="197" name="Radiation Lock West" x="4352" y="-288" w="128" h="64">
+			<objects>door</objects>
+		</room>
+		<room id="198" name="Radiation Lock East" x="4544" y="-288" w="128" h="64">
+			<objects>door</objects>
+		</room>
+		<line id="199">
+			<dock index="0" id="197" port="e" />
+			<dock index="1" id="198" port="w" />
+		</line>
+		<room id="200" name="Radiation Lab" x="4736" y="-288" w="128" h="64">
+			<objects>brown spool|powerful portable lamp|*death by radiation*</objects>
+		</room>
+		<line id="201">
+			<dock index="0" id="198" port="e" />
+			<dock index="1" id="200" port="w" />
+		</line>
+		<room id="202" name="Bio Lock West" x="4352" y="-32" w="128" h="64">
+			<objects>door</objects>
+		</room>
+		<room id="203" name="Bio Lock East" x="4544" y="-32" w="128" h="64">
+			<objects>door|(miniaturisation access card)</objects>
+		</room>
+		<line id="204">
+			<dock index="0" id="202" port="e" />
+			<dock index="1" id="203" port="w" />
+		</line>
+		<line id="205" style="dashed" flow="oneWay" midText="Floyd">
+			<dock index="0" id="203" port="e" />
+			<dock index="1" id="203" port="ne" />
+		</line>
+		<room id="206" name="Station 384" x="3936" y="480" w="128" h="64">
+			<objects>metal plate|metal plate|silicon strip</objects>
+		</room>
+		<line id="207" style="dashed" flow="oneWay" midText="swipe card, type 384">
+			<dock index="0" id="158" port="ssw" />
+			<dock index="1" id="206" port="nnw" />
+		</line>
+		<room id="208" name="Strip Near Station" x="4160" y="480" w="128" h="64" />
+		<line id="209" flow="oneWay">
+			<dock index="0" id="206" port="e" />
+			<dock index="1" id="208" port="w" />
+		</line>
+		<line id="210" flow="oneWay">
+			<dock index="0" id="208" port="wnw" />
+			<dock index="1" id="158" port="sse" />
+		</line>
+		<room id="211" name="Middle of Strip" x="4160" y="352" w="128" h="64">
+			<objects at="se">(microbe)</objects>
+		</room>
+		<line id="212">
+			<dock index="0" id="208" port="n" />
+			<dock index="1" id="211" port="s" />
+		</line>
+		<room id="213" name="Strip Near Relay" x="4160" y="224" w="128" h="64">
+			<objects at="se">vacuum-sealed micro-relay|    speck of impurity</objects>
+		</room>
+		<line id="214">
+			<dock index="0" id="211" port="n" />
+			<dock index="1" id="213" port="s" />
+		</line>
+		<room id="215" name="Auxilliary Booth" x="4944" y="176" w="128" h="64" />
+		<line id="217">
+			<dock index="0" id="215" port="nnw" />
+			<dock index="1" id="218" port="ssw" />
+		</line>
+		<room id="218" name="Lab Office" x="4944" y="-32" w="128" h="64">
+			<objects>door|white button "lab lights on"|black button "lab lights off"|red button "emergency system"|desk|    memo|    gas mask</objects>
+		</room>
+		<line id="219" style="dashed" flow="oneWay">
+			<dock index="0" id="208" port="wsw" />
+			<point index="1" x="4128" y="624" />
+		</line>
+		<line id="220" style="dashed" flow="oneWay">
+			<point index="0" x="4128" y="624" />
+			<point index="1" x="5008" y="624" />
+		</line>
+		<line id="221" style="dashed" flow="oneWay">
+			<point index="0" x="5008" y="624" />
+			<dock index="1" id="215" port="s" />
+		</line>
+		<room id="216" name="Bio Lab" x="4752" y="-32" w="128" h="64">
+			<objects>mutants</objects>
+		</room>
+		<line id="222">
+			<dock index="0" id="218" port="w" />
+			<dock index="1" id="216" port="e" />
+		</line>
+		<line id="223" style="dashed" flow="oneWay">
+			<dock index="0" id="216" port="wsw" />
+			<dock index="1" id="203" port="ese" />
+		</line>
+		<room id="224" name="Cryo-Anteroom" x="3728" y="464" w="160" h="96">
+			<objects>Veldina|* the end *</objects>
+		</room>
+		<line id="225" style="dashed" flow="oneWay" midText="fix everything">
+			<dock index="0" id="155" port="s" />
+			<dock index="1" id="224" port="n" />
+		</line>
+	</map>
+	<settings>
+		<colors>
+			<canvas>White</canvas>
+			<fill>White</fill>
+			<border>MidnightBlue</border>
+			<line>MidnightBlue</line>
+			<selectedLine>SteelBlue</selectedLine>
+			<hoverLine>DarkOrange</hoverLine>
+			<largeText>MidnightBlue</largeText>
+			<smallText>MidnightBlue</smallText>
+			<lineText>MidnightBlue</lineText>
+			<grid>#F5F5F5</grid>
+		</colors>
+		<fonts>
+			<room size="13">Comic Sans MS</room>
+			<object size="11">Comic Sans MS</object>
+			<line size="9">Comic Sans MS</line>
+		</fonts>
+		<grid>
+			<snapTo>yes</snapTo>
+			<visible>yes</visible>
+			<showOrigin>yes</showOrigin>
+			<size>16</size>
+		</grid>
+		<lines>
+			<width>2</width>
+			<handDrawn>yes</handDrawn>
+			<arrowSize>12</arrowSize>
+			<textOffset>4</textOffset>
+		</lines>
+		<rooms>
+			<darknessStripeSize>24</darknessStripeSize>
+			<objectListOffset>4</objectListOffset>
+			<connectionStalkLength>32</connectionStalkLength>
+		</rooms>
+		<ui>
+			<handleSize>12</handleSize>
+			<snapToElementSize>16</snapToElementSize>
+		</ui>
+	</settings>
+</trizbort>

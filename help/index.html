@@ -1,0 +1,1242 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<!-- Assert that we are compliant with HTML 4.01 strict, above. This helps avoid browsers taking a wild stab at our intentions. -->
+<!-- In case our HTTP server fails to provided a Content Type header, assert that we are HTML encoded as UTF8. -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>Trizbort, the Interactive Fiction Mapper</title>
+<!--
+	By default, our page loads with all content visible, and no
+	navigation buttons, for people with Javascript sensibly
+	disabled.
+	The following script will show the navigation buttons, hide
+	all sections but the first one, and permit the navigation
+	buttons to be used to navigate between sections.
+-->
+<script type="text/javascript">
+<!--
+	// the list of sections in this document, by id (<div id="...">)
+	var sections =
+	[
+		'overview',
+		'media',
+		'download',
+		'help',
+		'feedback',
+	];
+
+	function hideExcept(sectionName) {
+		for (var index=0; index<sections.length; ++index) {
+			var currentName = sections[index];
+			var current = document.getElementById(currentName);
+			if (current) {
+				current.style.display = (currentName == sectionName) ? 'block' : 'none';
+			}
+		}
+	}
+	
+	// switch to the given section name, rendering it visible and all other sections invisible
+	function switchTo(sectionName) {
+		// first section is "http://site/", not "http://site/#foo"
+		if (sectionName === sections[0]) {
+			location = "/";
+			return;
+		}
+
+		if ( !location.href.match(/help/i) ) {
+			// we're on the index page (case-insensitive)
+			if (sectionName === "help") {
+				// help is not on the index page
+				location = "/help/";
+				return;
+			}
+			// everything else is on this (the index) page
+		}
+		else
+		{
+			// we're not on the index page
+			if (sectionName === "help")
+			{
+				// assume we're already on the help page
+				return;
+			}
+			else
+			{
+				// everything else is on the index page
+				location = "/#" + sectionName;
+				return;
+			}
+		}
+
+		hideExcept(sectionName);
+		location.hash = sectionName;
+	}
+	
+	// safely register a function to run when the page loads
+	function registerOnLoad(func) {
+		var previous = window.onload;
+		if (typeof previous != 'function') {
+			// there is no previous onload handler
+			window.onload = func;
+		}
+		else {
+			// there is a previous onload handler:
+			// replace it with a new one
+			window.onload = function() {
+				if (previous) {
+					// call the old one first
+					previous();
+				}
+				// now call the new one
+				func();
+			}
+		}
+	}
+
+	registerOnLoad(function() {
+		if ( !location.href.match(/help/i) ) {
+			// our url contains "index" or ends with "net/" as in trizbort.genstein.net/
+			var currentName = location.hash;
+			if (currentName) {
+				// allow the location hash (e.g. "page.html#download") to navigate us to a section;
+				currentName = currentName.substring(1); // strip the '#' from e.g. '#download'
+
+				// hide all sections except the current one
+				switchTo(currentName);
+			}
+			else {
+				// lacking a location hash, we start at the first section
+				currentName = sections[0];
+				hideExcept(currentName)
+			}
+			
+		}
+		
+		// show the navigation buttons
+		document.getElementById('navigation').style.display = 'block';
+		
+	})
+// -->
+</script>
+<!-- Common styles for the site -->
+<style type="text/css">
+html, body
+{
+	margin: 0px;
+	background-color: #000000;
+}
+.domainbar
+{
+	clear: both;
+	background-color: #570057;
+	color: #ccbb66;
+	float: left;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	text-align: left;
+	font-family: Georgia, Sans Serif;
+}
+.topdomainbar
+{
+	border-bottom: 4px solid #300030;
+}
+.bottomdomainbar
+{
+	border-top: 4px solid #300030;
+}
+.domainbar_indent
+{
+	padding-left: 12px;
+}
+.sitebacklink
+{
+	float: right;
+	padding-right: 20px;
+	text-decoration: none;
+	color: #ccbb66;
+}
+.sitebacklink:hover
+{
+	text-decoration: underline;
+}
+.sitebacklink:visited
+{
+	color: #ccbb66;
+}
+.areabar
+{
+	clear: both;
+	float: left;
+	width: 100%;
+	background-color: #000000;
+	color: #ffffff;
+	font-family: Palatino, Serif;
+	border-bottom: 1px solid #777777;
+}
+.siteheading
+{
+	font-family: Georgia, Sans Serif;
+	font-size: 16px;
+	font-weight: 100;
+	float: left;
+}
+.areabar_indent
+{
+	padding: 48px;
+}
+.areabar_superheading
+{
+	font-size: 50px;
+	font-weight: 400;
+	color: #ffffff;
+}
+.areabar_majorheading
+{
+	font-size: 25px;
+	font-weight: 100;
+	color: #909090;
+}
+.areabar_quote
+{
+	font-family: Palatino, Serif;
+	font-size: 12px;
+	font-weight: 100;
+	color: #505050;
+	padding-top: 4px;
+}
+.buttonbar
+{
+	overflow: hidden;			/* This chops off any overhanging divs */
+	clear: both;
+	width: 100%;
+	background-color: #a0a0a0;
+	display: none;
+	border-bottom: 1px solid #406090;
+	line-height: 40px;
+}
+.buttonbar_indent
+{
+	padding-left: 48px;
+	padding-right: 0px;
+	padding-top: 10px;
+	padding-bottom: 0px;
+}
+a.button:link
+{
+	color: #c0c0c0;
+	background-color: #406090;
+	text-decoration: none;
+	font-variant: small-caps;
+	padding: 10px;
+	border-left: 1px solid #204070;
+	border-right: 1px solid #204070;
+	border-top: 1px solid #204070;
+}
+a:link
+{
+	color: #406090;
+	text-decoration: underline;
+}
+a:link:visited
+{
+	color: #570057;
+}
+a:link:hover
+{
+	color: #ccbb66;
+}
+a:link:active
+{
+}
+a.button:link:hover
+{
+	color: #ffffff;
+}
+a.button:link:active
+{
+	color: #ffffff;
+}
+a.button:link:visited
+{
+	color: #c0c0c0;
+}
+.bodycontainer
+{
+	background-color: #ffffff;
+	padding-top: 0px;
+	padding-bottom: 24px;
+	clear: both;
+	font-family: Georgia, Serif;
+	font-size: 14px;
+	line-height: 22px;
+}
+.floatingmapfragment
+{
+	float: right;
+	padding-right: 48px;
+}
+	/* body text which is not columnar needs this padding */
+	.indent_without_columns
+	{
+		padding-left: 48px;
+		padding-right: 25%;
+	}
+	/* body text which is columnar needs this padding */
+	.indent_column
+	{
+		padding-left: 48px;
+		padding-right: 48px;
+	}
+	/* column container */
+	.colmask {
+		clear:both;
+		float:left;
+		width:100%;					/* width of whole page */
+		overflow: hidden;			/* This chops off any overhanging divs */
+		padding-left: 0px;
+		padding-right: 0px;
+		padding-top: 0px;
+		padding-bottom: 0px;
+	}
+	/* common column settings */
+	.colright,
+	.colmid,
+	.colleft {
+		float:left;
+		width:100%;
+		position:relative;
+	}
+	.col1,
+	.col2,
+	.col3 {
+		float:left;
+		position:relative;
+		padding: 0px;
+		overflow:hidden;
+	}
+	/* 2 Column (double page) settings */
+	.doublepage {
+		background:#eee;		/* right column background colour */
+	}
+	.doublepage .colleft {
+		right:50%;				/* right column width */
+		background:#fff;		/* left column background colour */
+	}
+	.doublepage .col1 {
+		width:50%;				/* left column content width (column width minus left and right padding) */
+		left:50%;				/* right column width plus left column left padding */
+	}
+	.doublepage .col2 {
+		width:50%;				/* right column content width (column width minus left and right padding) */
+		left:50%;				/* (right column width) plus (left column left and right padding) plus (right column left padding) */
+	}
+h1
+{
+	color: #406090;
+	font-family: Palatino, Serif;
+	font-size: 30px;
+	font-weight: 400;
+	margin: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 40px;
+	padding-bottom: 5px;
+}
+h2
+{
+	color: #406090;
+	font-family: Palatino, Serif;
+	font-size: 20px;
+	font-weight: 400;
+	margin: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 20px;
+	padding-bottom: 5px;
+}
+h3
+{
+	color: #406090;
+	font-family: Palatino, Serif;
+	font-size: 16px;
+	font-weight: 400;
+	margin: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 20px;
+	padding-bottom: 5px;
+}
+h4
+{
+	color: #406090;
+	font-family: Palatino, Serif;
+	font-size: 14px;
+	font-weight: 400;
+	margin: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 20px;
+	padding-bottom: 5px;
+}
+table
+{
+	border: 1px solid black;
+	border-collapse: collapse;
+	font-size: 14px;
+}
+td
+{
+	padding: 6px;
+	border: 1px solid black;
+}
+td.alt
+{
+	background-color: #e0e0d0;
+}
+td.heading
+{
+	border-bottom: 1px solid white;
+	background-color: #5070a0;
+	color: white;
+	text-align: center;
+}
+td.altheading
+{
+	border-bottom: 1px solid white;
+	background-color: #305080;
+	color: white;
+	text-align: center;
+}
+li
+{
+	margin: 4px 0px 4px 0px;
+}
+pre
+{
+	font-size: 11px;
+	font-family: Consolas, Courier New, Courier, Serif;
+	line-height: 14px;
+}
+.footnote
+{
+	font-size: 10px;
+}
+.tip
+{
+	float: right;
+	clear: both;                /* don't put tips next to each other */
+	border: 2px solid #b0b090;
+	background-color: #e0e0d0;
+	color: black;
+	padding: 0px;
+	margin-left: 10px;          /* spacing between the tip and text which flows to its left */
+	margin-top: 5px;
+	margin-bottom: 5px;        /* spacing between stacked tips, if any */
+	width: 300px;
+}
+.tip .heading
+{
+	background-color: #305080;
+	color: white;
+	font-variant: small-caps;
+	font-weight: bold;
+	padding: 2px;
+	text-align: center;
+}
+.tip .body
+{
+	padding: 0px 8px 8px 8px;
+}
+.tip p
+{
+	padding: 0px;
+	margin: 5px 0px 0px 0px;
+}
+.tip .quote
+{
+	background-color: white;
+	color: black;
+	border: 1px solid #b0b090;
+	padding: 2px;
+	line-height: 23px;
+}
+.term
+{
+	font-style: italic;
+}
+.emphatic
+{
+	/* for emphasising key phrases in a paragraph; blanked since any changes appear be ugly as hell or just too emphatic; ho well. */
+}
+.code
+{
+	background-color: white;
+	color: black;
+	border: 1px solid #b0b090;
+	padding: 2px;
+	line-height: 23px;
+	font-family: Consolas, Courier New, Courier, Serif;
+	font-size: 12px;
+}
+</style>
+</head>
+<body>
+<div class="domainbar topdomainbar">
+<div class="domainbar_indent">
+&nbsp;
+</div>
+</div>
+<div class="areabar">
+<div class="areabar_indent">
+<span class="areabar_superheading">Trizbort</span><span class="areabar_quote">&nbsp;&nbsp;&there4;</span><br>
+<span class="areabar_majorheading">The Interactive Fiction Mapper</span><br>
+<span class="areabar_quote"><i>trizbort <strong>n.</strong></i> incantation causing a spatial shift. Easily confused with <i>satchmoz</i>, an incantation causing a shift in space.</span>
+</div>
+</div>
+<div class="buttonbar" id="navigation">
+<div class="buttonbar_indent">
+<a class="button" href="javascript:switchTo('overview')">&gt; Restart</a>
+<a class="button" href="javascript:switchTo('media')">&gt; Examine Trizbort</a>
+<a class="button" href="javascript:switchTo('download')">&gt; Get Trizbort</a>
+<a class="button" href="javascript:switchTo('help')">&gt; Help</a>
+<a class="button" href="javascript:switchTo('feedback')">&gt; Hello, Sailor</a>
+</div>
+</div>
+<div class="bodycontainer">
+<!--#include virtual="../header1.inc" -->
+<!--#include virtual="../css.inc" -->
+<!--#include virtual="../header2.inc" -->
+
+<div id="help" class="indent_without_columns">
+<h1>Using Trizbort</h1>
+
+<p>This guide explains how to use Trizbort.</p>
+
+<p>A freely redistributable version of this guide may be found on <a href="http://github.com/genstein/trizbort/tree/master/Docs/">GitHub</a>.</p>
+
+<h2>Table of Contents <span style="font-size: 10px;"><a href="javascript:void(0);" onclick="var x = document.getElementById('toc'); x.style.display = (x.style.display === 'none' ? 'block' : 'none');">show/hide</a></span></h2>
+
+<div id="toc">
+<ul>
+	<li><a href="#help_ui">Getting to Know Trizbort</a>
+	<ul>
+		<li><a href="#help_ui_screen">The Screen</a>
+		<li><a href="#help_ui_parts">Parts of the Screen</a>
+		<li><a href="#help_ui_terms">Parts of the Screen, Explained</a>
+	</ul>
+	<li>Basics
+	<ul>
+		<li><a href="#help_rooms">Working with Rooms</a>
+		<ul>
+			<li><a href="#help_rooms_create">Creating Rooms</a>
+			<li><a href="#help_rooms_select">Selecting, Moving and Resizing Rooms</a>
+			<li><a href="#help_rooms_delete">Deleting Rooms</a>
+			<li><a href="#help_rooms_edit">Editing Rooms</a>
+			<ul>
+				<li><a href="#help_rooms_edit_name">Naming Rooms</a>
+				<li><a href="#help_rooms_edit_dark">Dark Rooms</a>
+				<li><a href="#help_rooms_edit_objects">Objects in Rooms</a>
+				<li><a href="#help_rooms_edit_desc">Room Descriptions</a>
+			</ul>
+			<li><a href="#help_rooms_stylenew">Styling New Rooms</a>
+		</ul>
+		<li><a href="#help_connections">Working with Connections</a>
+		<ul>
+			<li><a href="#help_conn_ports">A Room's Ports</a>
+			<li><a href="#help_conn_create">Creating New Connections</a>
+			<li><a href="#help_conn_select">Selecting and Moving Connections</a>
+			<li><a href="#help_conn_delete">Deleting Connections</a>
+			<li><a href="#help_conn_edit">Editing Connections</a>
+			<ul>
+				<li><a href="#help_conn_edit_dir">Changing a Connection's Direction</a>
+				<li><a href="#help_conn_edit_plain">Plain Connections</a>
+				<li><a href="#help_conn_edit_props">Connection Properties and Custom Labels</a>
+			</ul>
+			<li><a href="#help_conn_stylenew">Styling New Connections</a>
+		</ul>
+		<li><a href="#help_nav">Navigating the Map</a>
+		<ul>
+			<li><a href="#help_nav_pan">Panning</a>
+			<li><a href="#help_nav_zoom">Zooming</a>
+			<li><a href="#help_nav_other">Other Views</a>
+		</ul>
+	</ul>
+	<li>Advanced Topics
+	<ul>
+		<li><a href="#help_settings">Map Settings</a>
+		<ul>
+			<li><a href="#help_settings_about">About the Map</a>
+			<li><a href="#help_settings_colorfont">Colors and Fonts</a>
+			<li><a href="#help_settings_linegrid">Lines and Grid</a>
+			<li><a href="#help_settings_other">Other Settings</a>
+		</ul>
+		<li><a href="#help_select">Multiple Selection</a>
+		<ul>
+			<li><a href="#help_select_all">Select All/None</a>
+			<li><a href="#help_select_marquee">Marquee Selection</a>
+			<li><a href="#help_select_mod">Selection Modifiers</a>
+			<li><a href="#help_select_ops">Working with Multiple Selections</a>
+		</ul>
+		<li><a href="#help_fu">Keyboard Fu</a>
+		<li><a href="#help_automap">Using Automapping</a>
+		<ul>
+			<li><a href="#help_automap_start">Starting Automapping</a>
+			<li><a href="#help_automap_options">Automapping Options</a>
+			<li><a href="#help_automap_mid">Whilst Automapping</a>
+			<li><a href="#help_automap_disambig">Disambiguating Between Rooms</a>
+			<li><a href="#help_automap_how">How It Works (or: When It Doesn't)</a>
+			<li><a href="#help_automap_tips">Automapping Tips</a>
+		</ul>
+		<li><a href="#help_export">Exporting your Map</a>
+		<ul>
+			<li><a href="#help_export_pdf">Exporting to PDF</a>
+			<li><a href="#help_export_png">Exporting a Picture</a>
+			<li><a href="#help_export_i7">Exporting to Inform 7</a>
+			<li><a href="#help_export_tads">Exporting to TADS</a>
+			<li><a href="#help_export_i6">Exporting to Inform 6</a>
+			<li><a href="#help_export_tips">Export Tips</a>
+		</ul>
+	</ul>
+</ul>
+</div> <!-- toc -->
+
+<a name="help_ui"></a>
+<h1>Getting to Know Trizbort</h1>
+
+<a name="help_ui_screen"></a>
+<h2>The Screen</h2>
+
+<p>Trizbort looks like this:</p>
+<p><img src="ui.png" alt="Trizbort's user interface"></p>
+
+<a name="help_ui_parts"></a>
+<h2>Parts of the Screen</h2>
+
+<p>Here's the same view, but with each part labelled. We'll use these terms later on, so you might want to remember them or just check back here if you see a term you're not familiar with.</p>
+<p><img src="ui_labelled.png" alt="Trizbort's user interface, labelled"></p>
+
+<a name="help_ui_terms"></a>
+<h2>Parts of the Screen, Explained</h2>
+
+<p></p><table>
+<tr><td class="heading">Menu Bar</td><td>Most of Trizbort's commands are available both from the menu bar and through keyboard shortcuts (keys you can press to achieve the same effect). Where shortcuts exist, they appear next to the relevant menu item. So if a menu item reads "View&nbsp;Entire&nbsp;Map&nbsp;&nbsp;&nbsp;&nbsp;Ctrl+Home" then you can either select the menu item or hold down the Control key and press the Home key on your keyboard to achieve the same effect.</td></tr>
+<tr><td class="altheading">Toolbar</td><td class="alt">Some of Trizbort's commands also appear here as buttons for quick access.</td></tr>
+<tr><td class="heading">Minimap</td><td>This shows an overview of the entire map, with each mapped room as a box.</td></tr>
+<tr><td class="altheading">Viewport</td><td class="alt">This shows the portion of the entire map you're currently viewing. You can click and/or drag inside the minimap with the left mouse button to move the viewport.</td></tr>
+<tr><td class="heading">Canvas</td><td>This shows you a "top down" view of the map which you can scroll and zoom in and out. You'll spend most of your time interacting with rooms and connections on the canvas. Trizbort generally assumes that the top of the screen is northerly, the bottom is southerly, the right is easterly and the left is westerly.</td></tr>
+<tr><td class="altheading">Scroll&nbsp;Bars</td><td class="alt">These let you scroll the canvas around, though you can also do the same by clicking and dragging the canvas with the middle mouse button, with the cursor keys, or with the minimap.</td></tr>
+<tr><td class="heading">Room</td><td>Rooms appear as boxes on the canvas. The name of the room appears in the middle of the box. If the room is dark (so you need a light source in game to see) then the room is marked with a black stripe in the top right corner, as with "Cave" in this picture.</td></tr>
+<tr><td class="altheading">Object List</td><td class="alt">Each room can have an optional list of objects, which you can set to appear next to the room in a chosen direction or even inside the room's box. The object list in this screenshot belongs to the room "Cave".</td></tr>
+<tr><td class="heading">Connection</td><td>Sometimes just called a "line" (no, really), connections show you how you can move from one room to another in game. If you move a room, its connections generally stay connected, automatically. Dotted connections may be used to indicate "conditional" exits: routes between rooms which you have to do something special in game to use, even if it's just unlocking a door.</td></tr>
+<tr><td class="altheading">Connection&nbsp;Label</td><td class="alt">You can assign text labels to the start, middle and/or end of connections, to indicate special directions such as "up" or "in" or to indicate a special action that has to be taken to go that way.</td></tr>
+<tr><td class="heading">Arrow</td><td>You can add arrows to a connection to indicate a one way route between rooms. Arrows point in the direction in which the line was first drawn, though you can easily reverse the direction of connections.</td></tr>
+</table>
+
+<div class="tip">
+<div class="heading">Tip</div>
+<div class="body">
+<p>Most things you can do in Trizbort are accessible from the menu bar or by pressing keys.</p>
+<p>Where this document says something like <span class="quote">choose&nbsp;Edit->Add&nbsp;Room</span> it means to select "Add Room" from the "Edit" menu on the menu bar.</p>
+<p>Where it says <span class="quote">press&nbsp;R</span> it means to press the "R" key on your keyboard; <span class="quote">press&nbsp;Ctrl+Home</span> means to hold down the Control key on your keyboard and press the "Home" key.</p>
+</div> <!-- tip body -->
+</div> <!-- tip -->
+
+<a name="help_rooms"></a>
+<h1>Working with Rooms</h1>
+
+<a name="help_rooms_create"></a>
+<h2>Creating Rooms</h2>
+
+<div class="tip">
+<div class="heading">Tip</div>
+<div class="body">
+<p><span class="quote">Click</span> usually means to click the left mouse button on something; <span class="quote">click&nbsp;and&nbsp;drag</span> or just <span class="quote">drag</span> means to press and hold the left mouse button down, move the mouse somewhere else, and then release the left mouse button.</p>
+</div> <!-- tip body -->
+</div> <!-- tip -->
+
+<p>You can create a room by moving the mouse over where you'd like the room to appear on the canvas and pressing R. You can also choose Edit->Add Room to add a room in the center of the canvas.</p>
+
+<a name="help_rooms_select"></a>
+<h2>Selecting, Moving and Resizing Rooms</h2>
+
+<p>After creating a new room it will be <span class="term">selected</span>. Selected rooms are drawn with inverted colours and their corners are decorated with <span class="term">handles</span>: blue boxes we'll come to in a moment. Click the mouse on a blank area of the canvas to deselect the room. Click the room again to select it. You can select any room by clicking on it.</p>
+
+<table>
+<tr><td><img src="rooms.png" alt="Three different ways the same room can appear."></td></tr>
+<tr><td class="alt">A room; a room when the mouse is hovering over it showing its <span class="term">ports</span>; and a <span class="term">selected</span> room showing its <span class="term">handles</span>.</td></tr>
+</table>
+
+<p>You'll notice that when you move the mouse over a room which isn't selected, lots of blue circles appear around its edge. Ignore these for now; they're called <span class="term">ports</span> and they're used for making new connections to or from the room. Just note that clicking on a port or handle isn't the same as clicking on the room itself.</p>
+
+<p>Click and drag the room - and not it's handles or ports - to move it around the map. You can arrange rooms however you like.</p>
+
+<p>The <span class="term">handles</span> around the edges of a room allow you to resize the room. If you drag any handle the room will get bigger or smaller in that direction depending whether you drag away from the room or towards it.</p>
+
+<a name="help_rooms_delete"></a>
+<h2>Deleting Rooms</h2>
+
+<p>To permanently remove a room from the map, select the room and press Del or choose Edit->Delete. Whenever you have something selected, Del or Edit->Delete will delete it if it can be deleted. Once you delete something it's gone forever, though if you saved your map first you can of course reload the saved copy of the map to get things back the way they were. It's worth saving frequently while using Trizbort if you know you're happy with your map so far, just in case you make a mistake. If your map is really awesome you might want to save a backup copy as well, in case you accidentally save some changes and later realise you didn't want them.</p>
+
+<p>When you delete a room, any connections to or from that room are also deleted, though the rooms on the other end of such connections aren't deleted unless you selected them as well.</p>
+
+<a name="help_rooms_edit"></a>
+<h2>Editing Rooms</h2>
+
+<p>Apart from its position and size, the other characteristics of room can be changed from its <span class="term">Properties dialog</span> (a dialog, or <span class="term">dialog box</span>, is a window which pops up so you can do certain related things). To bring up a room's properties, select the room and press Return or Enter, or press F2, or choose Edit->Properties.</p>
+
+<table>
+<tr><td><img src="room_properties.png" alt="The Properties dialog for a room."></td></tr>
+<tr><td class="alt">The <span class="term">Properties dialog</span> for a room.</td></tr>
+</table>
+
+<p>A room's Properties include its name; whether the room is dark in-game; the list of objects, if any, in the room; where to position the list of objects on the map relative to the room; and the room's description, if any.</p>
+
+<p>You can only bring up the Properties dialog for rooms one at a time. Some properties are also available via the menu bar (such as Edit->Is Dark Room) or the keyboard (such as by pressing K to change whether a room is dark; again, these shortcuts are displayed on the menu bar in case you forget.)</p>
+
+<a name="help_rooms_edit_name"></a>
+<h3>Naming Rooms</h3>
+
+<p>You can name the room whatever you like, though if you're planning on exporting your map to an IF development system such as Inform 7 or TADS you should probably stick to names that such a system will be happy with.</p>
+
+<a name="help_rooms_edit_dark"></a>
+<h3>Dark Rooms</h3>
+
+<p>You can check or uncheck the "Dark" box to mark the room as dark, or lit. This has no effect in Trizbort except that dark rooms are drawn with a black stripe in their top right corner; it may have an effect if you export your map to an IF development system.</p>
+
+<a name="help_rooms_edit_objects"></a>
+<h3>Objects in Rooms</h3>
+
+<p>The list of objects in the room is just a paragraph of text. Trizbort tends to assume that you'll put a single object on each line, but you don't have to. You can indicate that one object is inside (or on top of, or carried by) another by putting spaces at the start of its line. You can use blank lines where you like to space things out. You can refer to things as "a mailbox", "an horse", but Trizbort tends to assume you'll just say "mailbox" or "horse". These conventions are entirely optional, but Trizbort will assume you're using them if you later export your map to an IF development system.</p>
+
+<table>
+<tr><td><img src="object_list.png" alt="A typical list of objects in a room."></td></tr>
+<tr><td class="alt">A typical list of the objects in a room. A game might say "Mr Jones is here. He carries a hat (on which is a hatband) and a goldfish bowl (in which is a goldfish.) You can also see Mrs Jones and a rabbit."</td></tr>
+</table>
+
+<p>The arrow buttons to the right of the object list in a room's Properties dialog indicate on which side of the room the list will appear on the map; they don't do anything else. In the above picture the bottom left corner arrow is selected; this means the list of objects will appear to the bottom left of the room. On the map, Trizbort will automatically align the object list so that its nearest edges are flush with the room, to make it clearer which objects are in each room.</p>
+
+<p>If you click the button showing a box in the middle of the arrow buttons, the object list will appear inside the room, beneath the room's name, rather than outside the room. At first when you do this it might look on the canvas like the object list has vanished; this happens if your room isn't big enough for the object list. You may need to make the room bigger in order to see the whole list.</p>
+
+<div class="tip">
+<div class="heading">Tip</div>
+<div class="body">
+<p>Changes you make inside dialogs like a room's Properties dialog will not take effect until you click OK. Click Cancel to ignore any changes you made in the dialog since you last opened it.</p>
+</div> <!-- tip body -->
+</div> <!-- tip -->
+
+<a name="help_rooms_edit_desc"></a>
+<h3>Room Descriptions</h3>
+
+<p>If you click the "Description" tab, you can edit the description of the room. Click the "Objects" tab again to see the list of objects. Trizbort doesn't use this description itself, but if you export your map to an IF development system the description may be used to describe the room when playing the game. When automapping, Trizbort will fill out the description for you if it can.</p>
+
+<a name="help_rooms_stylenew"></a>
+<h2>Styling New Rooms</h2>
+
+<p>The style and size of a new room is taken from the last selected room. So if you last selected a large, dark room, the next new room you create will be large and dark.</p>
+
+<a name="help_connections"></a>
+<h1>Working with Connections</h1>
+
+<a name="help_conn_ports"></a>
+<h2>A Room's Ports</h2>
+
+<p>If you have nothing selected and you move the mouse over a room, its <span class="term">ports</span> will appear as blue circles around the edges. Ports are smart points which are fixed to the edges of a room and to which connections may <span class="term">dock</span>. If a connection is docked to a room's port, and you then move the room, the connection will move along with the room. Ports are always present, but are only shown when you mouse over a room and don't have anything selected.</p>
+
+<div class="tip">
+<div class="heading">Tip</div>
+<div class="body">
+<p>Ports are only shown for rooms when nothing is selected. If you can't create new connections, try clicking a blank area of the canvas to clear your selection first.</p>
+</div> <!-- tip body -->
+</div> <!-- tip -->
+
+<table>
+<tr><td><img src="room_ports.png" alt="A room's ports."></td></tr>
+<tr><td class="alt">A room's ports, from which new connections may be made.</td></tr>
+</table>
+
+<p>Trizbort provides ports for each of the standard compass directions seen in a game: north, south, east, west, northeast, northwest, southeast and southwest. In addition it provides eight extra ports (NNE, ENE, ESE, SSE, SSW, WSW, WNW, NNW). These are intended to be a convenient place to put other special directions such as up, down, in or out; but you can use them however you like. If you export your map to an IF development system, Trizbort will take its best guess as to which of the standard directions you mean: it tends to assume that ports on the same side of the room's box are the same direction, so ENE, E and ESE are all easterly.</p>
+
+<a name="help_conn_create"></a>
+<h2>Creating New Connections</h2>
+
+<table>
+<tr><td><img src="new_connection.gif" alt="Creating a new connection."></td></tr>
+<tr><td class="alt">Creating a new connection.</td></tr>
+</table>
+
+<p>If you click and drag a room's port away from its room a short distance, a new connection will be made starting at that port. Still holding the mouse button down, you can move the mouse over another room which will cause its ports to appear. Moving the mouse over one of these ports and then releasing the mouse button will confirm the new connection.</p>
+
+<a name="help_conn_select"></a>
+<h2>Selecting and Moving Connections</h2>
+
+<p>You can move a connection, or change what it's connected to, by dragging its end points. Clicking a connection will select it and show blue circles at each end of the connection: its own ports. Drag a connection's port onto a room port, or elsewhere, to move the connection.</p>
+
+<p>Though connections have ports, you cannot dock a connection to another connection: the end points of connections laid end to end remain independent. This doesn't prevent you from arranging connections end to end if you want your connection to take a particular route around the map.</p>
+
+<a name="help_conn_delete"></a>
+<h2>Deleting Connections</h2>
+
+<p>To permanently remove a connection from the map, select it and press Del or choose Edit->Delete. Whenever you have something selected, Del or Edit->Delete will delete it if it can be deleted.</p>
+
+<a name="help_conn_edit"></a>
+<h2>Editing Connections</h2>
+
+<p>Connections can be styled in a variety of different ways.</p>
+
+<table>
+<tr><td><img src="connection_styles.png" alt="Different connection styles."></td></tr>
+<tr><td class="alt">Different combinations of connection styles. From top to bottom: two way; one way; conditional; one way conditional; labelled; and the mouthful that is one way conditional labelled.</td></tr>
+</table>
+
+<p>You can change a connection's style by selecting it and then using the Edit->Line Styles menu or keyboard shortcuts.</p>
+
+<p>Press A or choose Edit->Line Styles->One Way Arrow to toggle whether a connection is one way. Press T or choose Edit->Line Styles->Dotted to toggle whether a connection is conditional. You can quickly label a connection as up/down, down/up, out/in or in/out by pressing U, D, I or O or choosing the relevant option from Edit->Line Styles.</p>
+
+<a name="help_conn_edit_dir"></a>
+<h3>Changing a Connection's Direction</h3>
+
+<p>The arrow on a one way connection points in the direction in which the connection was first created: so if you created it left to right, the arrow will point to the right. You can quickly change the direction of the connection by pressing V or choosing Edit->Reverse Line. This also swaps any connection labels at either end of the line.</p>
+
+<a name="help_conn_edit_plain"></a>
+<h3>Plain Connections</h3>
+
+<p>You can press P or choose Edit->Line Styles->Plain to reset a connection to a two way connection with no arrows or labels at either end.</p>
+
+<a name="help_conn_edit_props"></a>
+<h3>Connection Properties and Custom Labels</h3>
+
+<p>Connections, like rooms, also have their own Properties dialog. You can bring it up in the same way, by selecting the connection and pressing Return or choosing Edit->Properties.</p>
+
+<table>
+<tr><td><img src="connection_properties.png" alt="The Properties dialog for a connection."></td></tr>
+<tr><td class="alt">The <span class="term">Properties dialog</span> for a connection.</td></tr>
+</table>
+
+<p>All of the ways in which a connection can be styled are available in the Properties dialog. In addition, you can set your own labels for the start, middle and/or end of the line. Trizbort doesn't itself use the middle label except to display it; you might want to use it to indicate any special actions which have to be taken in game in order to travel along this route, such as "pull lever" or "feed iguana".</p>
+
+<p>Trizbort doesn't mind how you label the start and end of a line, if it all; you might want to indicate up/down connections with "U" and "D" or "top" and "bottom". However, if you export your map to an IF development system, Trizbort will assume you're using its conventions.</p>
+
+<a name="help_conn_stylenew"></a>
+<h2>Styling New Connections</h2>
+
+<p>The style and size of a new connection is taken from the last selected connection. So if you last selected a one way, conditional connection then the next connection you create will be one way and conditional.</p>
+
+<a name="help_nav"></a>
+<h1>Navigating the Map</h1>
+
+<p>Maps for some games can grow quite large. Trizbort provides a near infinite canvas for each map, and you can place rooms wherever you like. In order that you can view the whole map, or just a portion of it, Trizbort lets you view the map in various ways.</p>
+
+<a name="help_nav_pan"></a>
+<h2>Panning</h2>
+
+<p>If you have a three button mouse you can click and drag the canvas with the middle mouse button to pan (scroll) in any direction. If you only have a two button mouse you can hold down the Shift key and drag with the right mouse button instead.</p>
+
+<p>The minimap shows you an overview of the entire map, and with a rectangle representing the <span class="term">viewport</span>: how much of the map you can currently see. You can click and/or drag inside the minimap to pan around the map. If the whole map will fit onto one screen at the scale you're currently using, the viewport will fill the minimap, and clicking the minimap will simply recenter your view.</p>
+
+<p>The scroll bars at the bottom and right of the canvas show you how much of the map you can currently see. You can click and/or drag the scroll bars in the usual way to change your view.</p>
+
+<p>You can also use the Up, Down, Left and Right cursor keys to scroll the map in any direction.</p>
+
+<a name="help_nav_zoom"></a>
+<h2>Zooming</h2>
+
+<p>If your mouse has a mouse wheel, you can scroll the mouse wheel forwards and backwards to zoom in and out. This scales the map onscreen making it bigger or smaller.</p>
+
+<p>You can also use the '+' and '-' keys on your keyboard to zoom in and out. Both sets of '+' and '-' keys, on the main keyboard and on the numeric keypad if you have one, will do the same thing.</p>
+
+<p>You can also choose View->Zoom->In and View->Zoom->Out from the menu bar.</p>
+
+<a name="help_nav_other"></a>
+<h2>Other Views</h2>
+
+<p>You can choose View->Reset or press Home to reset your view so that you're looking at the center of the map, neither zoomed in or out.</p>
+
+<p>You can choose View->Entire Map to view the whole map at once. This centres your view and zooms out until the entire map is visible.</p>
+
+<a name="help_settings"></a>
+<h1>Map Settings</h1>
+
+<p>By selecting Tools->Settings you can change settings which are saved with the map. Each map has its own settings, and new maps start off with the default settings.</p>
+
+<p>You can restore the default settings for a map by choosing Tools->Restore Default Settings.</p>
+
+<a name="help_settings_about"></a>
+<h2>About the Map</h2>
+
+<p>The About tab lets you set the title, author, description and history of the map. These are all optional fields which you can use or leave blank. If you export your map to an IF development system, some of these fields may be used to describe the game.</p>
+
+<a name="help_settings_colorfont"></a>
+<h2>Colors and Fonts</h2>
+
+<p>The Colors and Fonts tab lets you change the colors used by Trizbort to draw the map, both on screen and when exporting as a PDF file or as an image.</p>
+
+<p>You may choose any font which is available on your computer, but if you give the Trizbort map file to other people they will need to have the same fonts in order to view your map as you intended. Trizbort will use another font if a chosen font is not available.</p>
+
+<a name="help_settings_linegrid"></a>
+<h2>Lines and Grid</h2>
+
+<p>The Lines and Grid tab gives you control over various settings to do with connections and with aligning things on the map.</p>
+
+<p></p><table>
+<tr><td class="heading">Hand Drawn</td><td>By default Trizbort gives lines a "hand drawn" appearance. If you prefer straight lines you can uncheck this box. This applies to both connections' lines and the border of a room.</td></tr>
+<tr><td class="altheading">Line Width</td><td class="alt">The width of lines, in pixels. This applies to both connections' lines and the border of a room.</td></tr>
+<tr><td class="heading">Arrow Size</td><td>The size of the arrow(s) which are drawn on one way connections, in terms of the width of the base of the arrow, in pixels.</td></tr>
+<tr><td class="altheading">Room Arrow Stalk Length</td><td class="alt">The name of this setting is misleading. For connections which are docked to a room's port, Trizbort automatically draws a line directly out from the room in the port's direction before continuing on towards the other end of the line. This is the <span class="term">stalk</span>, and its size can be controlled with this setting.</td></tr>
+<tr><td class="heading">Preferred Distance Between Rooms</td><td>In some situations Trizbort need to create a room adjacent to another room. This usually happens when automapping or when creating rooms via the numeric keypad (see <a href="#help_fu">Keyboard Fu</a>). This setting controls how far apart such rooms will be placed.</td></tr>
+<tr><td class="altheading">Text Offset from Line</td><td class="alt">Trizbort automatically adds a gap between a connection's line and any labels on that line. This setting controls how large that gap is.</td></tr>
+<tr><td class="heading">Grid Visible</td><td>Whether Trizbort shound draw a grid on the canvas.</td></tr>
+<tr><td class="altheading">Grid Size</td><td class="alt">The size of a grid square, in pixels.</td></tr>
+<tr><td class="heading">Snap To Grid</td><td>Whether Trizbort should automatically align the corners of rooms and the ends of connections to the nearest grid square.</td></tr>
+<tr><td class="altheading">Show Origin</td><td class="alt">Whether Trizbort should draw a faint crosshair on the canvas at coordinates (0,0). When a map is first created, this position is in the center of the canvas.</td></tr>
+</table>
+
+<a name="help_settings_other"></a>
+<h2>Other Settings</h2>
+
+<p>The Other tab gives you control over miscellaneous settings which don't fit into one of the above categories.</p>
+
+<p></p><table>
+<tr><td class="heading">Darkness Stripe Size</td><td>The width and height of the darkness stripe, which is the stripe Trizbort draws in the top right corner of dark rooms.</td></tr>
+<tr><td class="altheading">Object List Offset</td><td class="alt">The distance, in pixels, between a room and its object list, assuming the object list is drawn outside the room. If the object list is drawn inside the room, this is the distance of the bottom left of the object list from the bottom left corner of the room.</td></tr>
+<tr><td class="heading">Resize/Drag Handle Size</td><td>This controls the size, in pixels, of <a href="#help_rooms_select">handles</a> and <a href="#help_conn_ports">ports</a>. If you're zoomed in or out, handles and ports will be scaled accordingly.</td></tr>
+<tr><td class="altheading">Snap to Element Distance</td><td class="alt">To make it easier to select and drag rooms and connections, Trizbort allows you a small margin for error when selecting or dragging rooms and connections. You can increase this value if you have trouble selecting or dragging, or decrease it if you are very precise when selecting and dragging. Using very large or very small values may make Trizbort notably harder to use.</td></tr>
+</table>
+
+<a name="help_select"></a>
+<h1>Multiple Selection</h1>
+
+<p>You can select multiple things at once in Trizbort, both rooms and connections, even at the same time. This can be useful for rearranging the map, or applying properties such as darkness or connection styles en mass.</p>
+
+<p>Multiple selection is performed with both the mouse and keyboard.</p>
+
+<a name="help_select_all"></a>
+<h2>Select All/None</h2>
+
+<p>To select everything on the map, choose Edit->Select All or press Ctrl+A.</p>
+
+<p>To deselect everything, choose Edit->Select None or press Escape (Esc).</p>
+
+<a name="help_select_marquee"></a>
+<h2>Marquee Selection</h2>
+
+<p>A simple way to select multiple things at once is by dragging a rectangle (or <span class="term">marquee</span>) around everything you want selected. This is marquee selection.</p>
+
+<p>To do so, left click on a blank area of the canvas and drag out a rectangle around everything you'd like to select. By default this will select just the things which are inside or touching the marquee.</p>
+
+<p>To select everything under the marquee as well as everything already selected, hold the Control key whilst dragging out the marquee.</p>
+
+<p>To toggle whether each thing under the marquee is selected, hold the Shift key whilst dragging out the marquee. So if you hold Shift and drag the marquee over one selected room and one room which is not selected, the former will be deselected and the latter will be selected.</p>
+
+<table>
+<tr><td><img src="marquee.png" alt="Marquee selection."></td></tr>
+<tr><td class="alt">Selecting multiple objects by dragging a marquee rectangle around them.</td></tr>
+</table>
+
+<a name="help_select_mod"></a>
+<h2>Selection Modifiers</h2>
+
+<p>Alternatively you can click things to select them as normal, but hold down the Control or Shift keys whilst doing so.</p>
+
+<p>Holding the Control key whilst clicking something will add it to the selection, so it will be selected along with anything else already selected.</p>
+
+<p>Holding the Shift key whilst clicking something will toggle whether it is selected, so if it is selected it will be deselected, and if not it will be selected.</p>
+
+<a name="help_select_ops"></a>
+<h2>Working with Multiple Selections</h2>
+
+<p>A number of operations work just as well for multiple selections as for single selections, including:</p>
+
+<p></p><ul>
+<li>Moving things on the map. Click and drag anything that's selected to move it. Selected connections will only move if either they're not docked to a room's ports at one or both ends, or if their connected rooms are selected (in which case there is no need to select the connection, it will move with the rooms.)
+<li>Changing rooms from light to dark, or vice versa. Pressing K or choosing Edit->Dark Room will toggle whether each selected room is light or dark.
+<li>Changing connection styles. All the menu options under Edit->Line Styles, and their respective keyboard shortcuts, work on multiple selections.
+<li>Deleting things. Pressing Del or choosing Edit->Delete will delete everything that's selected.
+</ul>
+
+<p>Some options aren't available whilst multiple things are selected:</p>
+
+<p></p><ul>
+<li>Displaying room or connection Properties. These dialogs are only avaialable when one thing is selected.
+<li>Drawing new connections. To draw new connections you need to have nothing selected.
+</ul>
+
+<a name="help_fu"></a>
+<h1>Keyboard Fu</h1>
+
+<p>For people who prefer to use the keyboard rather than the mouse, there are some shorthand operations which are available just using the keyboard.</p>
+
+<h2>Navigating the Map with the Keyboard</h2>
+
+<p>With nothing selected, you can press Return to select the room closest to the centre of the canvas, and center the canvas on that room if it isn't already.</p>
+
+<p>If you have a numeric keypad, and have a room selected, you can use the numeric keypad like a compass rose to navigate around the map. With a room selected press  8, 2, 6 or 4 on the numeric keypad to select the room to the north, south, east or west of the currently selected room. Press 9, 3, 1 or 7 to select the room to the northeast, northwest, southeast or southwest. Note that these movements follow connections between rooms (and only connections between rooms); if there's no exit in that direction, Trizbort will look for an exit that's roughly in that direction. If it doesn't find any suitable exit, the selection won't change.</p>
+
+<table>
+<tr><td><img src="numpad.png" alt="The numeric keypad on a keyboard, with compass directions labelled."></td></tr>
+<tr><td class="alt">Using the keys on the numeric keypad to navigate the map.</td></tr>
+</table>
+
+<h2>Creating Rooms with the Keyboard</h2>
+
+<p>If you hold the Control key when pressing one of the above keys on the numerc keypad, if an exit exists in roughly that direction from the selected room it will be followed; but if there isn't an exit, a new adjacement room will be created in that direction from the selected room, and a connection will be made between the two rooms. Selection will pass to the new room and its Properties dialog will appear automatically so you can name the new room.</p>
+
+<p>This can be a quick way to rough out a map, especially if it follows a grid-like pattern.</p>
+
+
+<a name="help_automap"></a>
+<h1>Using Automapping</h1>
+
+<p><span class="term">Automapping</span> allows you to automatically generate a map given the <span class="term">transcript</span> from a game. In many cases, Trizbort can do this live, whilst you're playing the game, and you can edit and adjust the map whilst it does so.</p>
+
+<h2>Transcripts</h2>
+
+<p>Most interactive fiction <a href="http://en.wikipedia.org/wiki/Interactive_fiction">interpreters</a> support the creation of transcripts. A transcript is a text file which contains everything you typed whilst playing the game along with all of the game's responses.</p>
+
+<table>
+<tr><td><pre>&gt;SCRIPT
+Here begins a transcript of interaction with
+
+ZORK I: The Great Underground Empire
+Copyright (c) 1981, 1982, 1983 Infocom, Inc. All rights reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Revision 88 / Serial number 840726
+
+&gt;LOOK
+West of House
+You are standing in an open field west of a white house, with a boarded front
+door.
+There is a small mailbox here.
+
+&gt;GO NORTHEAST
+North of House
+You are facing the north side of a white house. There is no door here, and all
+the windows are boarded up. To the north a narrow path winds through the trees.
+
+&gt;ZORK
+At your service!</pre></td></tr>
+<tr><td class="alt">The start of a transcript from Zork I by Infocom.</td></tr>
+</table>
+
+<p>In many interpreters it is sufficient to type <span class="code">&gt;SCRIPT</span> or <span class="code">&gt;SCRIPT&nbsp;ON</span>, and then choose a file name, though some interpreters require you to take other steps.</p>
+
+<p>Interpreters vary in their default naming of transcript files. Some give them the extension <span class="code">.scr</span> or <span class="code">.log</span>. In any case they are usually just text files under the covers.</p>
+
+<p><a href="#help_automap_terps">Some interpreters</a> are not compatible with live automapping, though their transcripts can still be used for automapping once the game session has ended.</p>
+
+<a name="help_automap_start"></a>
+<h2>Starting Automapping</h2>
+
+<p>To start automapping, choose Automap->Start from the menu bar. It's often best to start with a blank canvas, though if you have saved a map which was created with automapping you can load it and then start automapping to continue where you left off. This can be useful if you're mapping a game which you're playing over the course of several days or weeks.</p>
+
+<p>When you start automapping, Trizbort will ask you for the name of the transcript, and present you with a few options.</p>
+
+<p>If you don't have a transcript already, you'll want to start one in your interpreter. While you're doing so you may want to turn on the game's <span class="code">&gt;VERBOSE</span> mode, or its equivalent, so that each time you enter a room its name and description are displayed; and <span class="code">&gt;LOOK</span> around after starting the transcript so that Trizbort can see where you are. You'll get the most out of automapping by doing so, but you don't have to.</p>
+
+<table>
+<tr><td><img src="automapping.png" alt="The dialog displayed by Trizbort when you start automapping."></td></tr>
+<tr><td class="alt">The options presented by Trizbort when you start automapping.</td></tr>
+</table>
+
+<a name="help_automap_options"></a>
+<h2>Automapping Options</h2>
+
+<p></p><table>
+<tr><td class="heading">Treat transcript as VERBOSE; expect room descriptions.</td><td><p>By default, Trizbort assumes you will have verbose mode, or its equivalent, turned on in the interpreter before you start the transcript, so that each time you enter a room its name and description are displayed. Trizbort likes room descriptions because it can use them to differentiate between rooms with the same name, and fill out the <a href="#help_rooms_edit_desc">description</a> of each room on the map.</p></td></tr>
+<tr><td class="altheading">Assume no two rooms have the same name.</td><td class="alt"><p>Trizbort normally uses both room names and descriptions to identify a room; this allows it to cope with rooms whose descriptions change, and with rooms with the same name but different descriptions.</p><p>If you're pretty sure that the game gives every room a unique name you can check this option; otherwise it's best to leave it unchecked.<p>If you state that the transcript isn't verbose, Trizbort knows it won't be getting room descriptions all the time and so can't use them to differentiate between rooms with the same name, and so is forced to assume that every room has a unique name.</p></td></tr>
+<tr><td class="heading">Guess possible exits from a room by reading its initial description.</td><td><p>By default, Trizbort will read a room's description and take a stab at likely exits from the room by looking for phrases like "To the east..." It will then mark such possible exits with <span class="term">stub</span> connections (connections which go from a room's port back to itself) so that you can see possible unexplored exits on the map.</p>
+<table>
+<tr><td><img src="stub_connection.png" alt="A stub connection marking a possible unexplored exit."></td></tr>
+<tr><td class="alt">A stub connection marking a possible unexplored exit.</td></tr>
+</table>
+<p>If later in the transcript it turns out that you can't go that way, Trizbort will try its best to notice and remove the stub. It will also remove the stub if it creates a real connection from the same port.</p>
+<p>Trizbort can easily make bad guesses here ("To the east is an impassable pile of rubble"); uncheck this option if you prefer.</p></td></tr>
+<tr><td class="altheading">At the game prompt, ___ followed by an object name adds it to the map.</td><td class="alt"><a name="help_automap_commands"></a><p>Trizbort does not attempt, by default, to work out which objects are in each room. However you can tell it to try by specifying a command it should look for in the transcript. This could be a command which works in game (such as <span class="code">&gt;GET&nbsp;object</span> or <span class="code">&gt;EXAMINE&nbsp;object</span>) or you can just make up a command (such as <span class="code">&gt;AHA&nbsp;object</span>); whether the game understands it or not isn't relevant to Trizbort.</p>
+<p>Again, Trizbort isn't very bright here: If your chosen command is "get" and you type <span class="code">&gt;GET&nbsp;MALBOX</span> instead of <span class="code">&gt;GET&nbsp;MAILBOX</span>, Trizbort will still add a "malbox" to the room's list of objects. The same applies if there is no mailbox in the room: Trizbort just reads the command, it doesn't try to understand the game's response.</td></tr>
+</table>
+
+<a name="help_automap_mid"></a>
+<h2>Whilst Automapping</h2>
+
+<p>Whilst automapping, Trizbort displays a bar beneath the canvas, telling you what automapping is currently doing and providing a "stop" button. To stop automapping, click this button or choose Automap->Stop.</p>
+
+<p>You can freely interact with the canvas, and do anything else you like in Trizbort, whilst automapping.</p>
+
+<table>
+<tr><td><img src="automapping_inprogress.png" alt="Trizbort's appearance whilst automapping is in progress."></td></tr>
+<tr><td class="alt">Trizbort's appearance whilst automapping is in progress.</td></tr>
+</table>
+
+<p>Trizbort may say various things during automapping, including:</p>
+
+<p></p><ul>
+<li><span class="term">Automapping is processing the transcript.</span> Trizbort is hard at work going through the transcript. As Trizbort finds mention of rooms and directions of travel in the transcript, it will add rooms and connections to the canvas. You can still interact with the canvas, stop automapping or exit Trizbort whilst this is going on.
+<li><span class="term">Automapping is waiting for more text.</span> Trizbort has reached the end of the transcript. If the interpreter is still running and scripting is still on, then as you take actions in game the transcript will grow, and Trizbort will notice and continue automapping. Some interpreters don't update the transcript as frequently as others, in which case Trizbort may appear to be a few turns behind the game.
+<li><span class="term">Trizbort cannot [open or read] the transcript, but will keep trying.</span> This can happen if the interpreter has exclusive control over the transcript file and won't let Trizbort read it, or if the transcript file doesn't exist or is otherwise inaccessible.
+</ul>
+
+<a name="help_automap_mid"></a>
+<h2>Disambiguating Between Rooms</h2>
+
+<p>Just as a game may sometimes ask you "which do you mean, the longsword or the short sword?", Trizbort sometimes isn't sure whether a room it's seen in the transcript is a new room or just an existing room whose description has changed.</p>
+
+<p>When Trizbort isn't sure, it'll display the Disambiguate Rooms dialog, tell you what it's seen, and ask you to choose.</p>
+
+<p>
+<table>
+<tr><td><img src="automap_disambiguate.png" alt="Disambiguating between rooms."></td></tr>
+<tr><td class="alt">Disambiguating between rooms.</td></tr>
+</table>
+
+<p>The room Trizbort is talking about is described at the top. All the rooms Trizbort has seen with this same name are listed in the bottom left. If you click one of these, their description is shown in the bottom right. (Note that if you're not running the game in <span class="code">&gt;VERBOSE</span> mode, there may be missing descriptions.)</p>
+
+<p>If you click a room in the bottom left and then choose <span class="code">This&nbsp;Room</span>, Trizbort will assume that these two rooms are the same and that its description has just changed. It will remember both versions of the description during this automapping session (though only the first description Trizbort sees is saved with the map.)</p>
+
+<p>If you choose <span class="code">A&nbsp;New&nbsp;Room</span>, Trizbort will assume that these two rooms have the same name but are different, and that it hasn't seen the latest one before. It will create a new room.</p>
+
+<p>If you choose <span class="code">I&nbsp;Don't&nbsp;Care&nbsp;Any&nbsp;More</span>, Trizbort will make its own choice arbitrarily and not ask you again during this automapping session.</p>
+
+<a name="help_automap_how"></a>
+<h2>How It Works (or: When It Doesn't)</h2>
+
+<p>The  automapping process is based on applying a series of heuristics to the text in the transcript (also known as blind guesswork). Don't be surprised if Trizbort gets things wrong from time to time. If you think it's got something wrong which it should easily have been able to figure out, do let me know.</p>
+
+<h3>Room Names in the Transcript</h3>
+
+<p>Trizbort recognises room names in the transcript by applying a series of rules when reading each line of the transcript. Primarily it expects words in room names to be proper names with an initial capital letter (but not all caps), though very short words are exempt from this rule. It also understands that room names in the transcript may be followed by suffixes such as " (on the bed)" or ", under the table" and will attempt to strip those out when determining the room name. There are numerous other rules it applies as it makes a best guess as to what is a room name and what is just text; but it may get things wrong.</p>
+
+<p>Since Trizbort identifies rooms purely by name (and, if possible, description), geography which is intentionally confusing to the player (such as mazes where each room is called "Maze" with the description "A room in a maze") will not be mapped well by Trizbort. Likewise for games which have multiple locations called "Alley", "Cupboard", etc.</p>
+
+<p>Some games do not use room names and/or descriptions or navigation commands in the usual way, or indeed at all. These games cannot be mapped by Trizbort.</p>
+
+<h3>Connecting Rooms Together</h3>
+
+<p>Trizbort understands when you move around the map in game using phrases such as <span class="code">&gt;&nbsp;GO&nbsp;NORTH</span>, <span class="code">&gt;&nbsp;WALK&nbsp;EAST</span>, <span class="code">&gt; STARBOARD</span>, <span class="code">&gt; SW</span>, etc. It will look for room name in the resulting text, and if it finds one it will connect the room it thinks you were just in to the next room. If the next room is new it will be placed on the map next to the room you were just in. If there is an existing room in the way, Trizbort will shift existing rooms on the map to make space for the new room.</p>
+
+<p>Some games do not use <span class="code">&gt;&nbsp;</span> or <span class="code">&gt;&gt;&nbsp;</span> or similar as the game prompt. At the present time these are also not likely to be mappable by Trizbort.</p>
+
+<P>Trizbort assumes all connections are one way until it sees you move back the other way.</p>
+
+<p>When you move up, down, in or out, Trizbort will label the relevant connection accordingly. It will not relabel a connection during automapping if it has any labels already.</p>
+
+<p>If Trizbort sees what it thinks is a room name in the transcript, but it wasn't preceeded by a navigation command which it could understand, then it will asssume you have "teleported" to the room. It will place the room on the map in an unoccupied position, but won't connect it to the previous room.</p>
+
+<a name="help_automap_terps"></a>
+<h3>Interpreter Compatibility</h3>
+
+<p>Windows Frotz, Gargoyle, Glulxe and Git are all fully compatible with live automapping. Nitfol is compatible though new rooms and objects may not appear on the map for a few turns. Filfre is not currently compatible with live automapping, though its transcripts can still be used for automapping once the game session is over.</p>
+
+<a name="help_automap_tips"></a>
+<h2>Automapping Tips</h2>
+
+<h3>General Tips for Automapping</h3>
+
+<p><span class="emphatic">Avoid using multiple in-game commands at one prompt while automapping</span>, such as <span class="code">&gt;GO&nbsp;NORTH.&nbsp;E&nbsp;THEN&nbsp;S.&nbsp;GET&nbsp;ALL.&nbsp;WEST.</span> Trizbort does not understand such commands; in fact it's not really the commands that are the problem, but relating each command to the relevant game text afterwards. So whilst Trizbort will be able to follow where you've gone if you're moving between rooms it knows about, it won't be able to connect new rooms to existing ones this way, and will assume you have teleported instead. It also won't pick up <a href="#help_automap_commands">special commands</a> unless they're alone at a prompt.</p>
+
+<p>Since it's not very bright, Trizbort sometimes thinks the name of the game you're playing is the name of a room. Feel free to delete these rooms; Trizbort won't mind.</p>
+
+<h3>Moving Around whilst Automapping</h3>
+
+<p><span class="emphatic">Avoid using unusual movement commands whilst automapping.</span> Trizbort only understands a limited set of movement commands, so even if the game accepts <span class="code">&gt;SASHAY&nbsp;EAST</span> or <span class="code">&gt;SLIDE&nbsp;DOWN</span>, you may want to stick to <span class="code">&gt;E</span>, <span class="code">&gt;GO&nbsp;DOWN</span> and the like during automapping. For games which use them, Trizbort does understand <span class="code">&gt;PORT</span>, <span class="code">&gt;STARBOARD</span>, <span class="code">&gt;FORE</span> and <span class="code">&gt;AFT</span> so you're free to use those and their usual abbreviations.</p>
+
+<p><span class="emphatic">If they exist, use compass directions when first moving to a room</span> so it's placed correctly on the map. For example if a doorway to the north leads into a house, move using <span class="code">&gt;NORTH</span> rather than <span class="code">&gt;IN</span>.</p>
+
+<p><span class="emphatic">Move in both directions between rooms to confirm that the connection is two way</span>, since Trizbort assumes all connections are one way until it sees otherwise.</p>
+
+<h3>Modifying the Map whilst Automapping</h3>
+
+<p><span class="emphatic">You can freely delete rooms and connections</span> whilst automapping is in progress. Trizbort will put them back, and reconnect them, as and when it needs to.</p>
+
+<p>Some maps can look too complicated because of extraneous connections (for example, outside the house in Zork I). <span class="emphatic">Feel free to delete extraneous connections</span>, even whilst the automapping is in progress. If you don't use them again in the transcript, Trizbort won't put them back.</p>
+
+<p>After moving into a new room on a complicated map, <span class="emphatic">check back and see where Trizbort has put it</span>. If you don't like the positioning, move it straight away, ideally to a more open area of the map; this will help Trizbort place new rooms and connections in sensible places. Some games are more devious in this regard than others; especially in early games, mapping the game was considered to be part of the challenge, and an automapper stands little chance next to a human brain. But a little manual intervention as you go along will go a long (sic) way.</p>
+
+<p><span class="emphatic">Trizbort doesn't mind where rooms are positioned on the map</span> during automapping: it will connect them up regardless. So you can freely move rooms around if you keep their connections intact.</p>
+
+<h3>Rearranging Connections whilst Automapping</h3>
+
+<p><span class="emphatic">You can rearrange connections between rooms during automapping</span> to tidy things up, but whenever you move between rooms Trizbort will make a new connection if it can't find a "suitable" one already. If you've radically rearranged connections, this may clutter your map.</p>
+
+<p>Here's how Trizbort decides what sort of connection is "suitable"; you may want to bear this in mind when rearranging connections.</p>
+
+<p>If you've made any connections between rooms in Trizbort by hand, you'll have seen that there are <a href="#help_conn_ports">16 ports</a> on a room at which you can make a connection.</p>
+
+<p>If during automapping you go east from the Pantry to the Kitchen, Trizbort adds a connection leading from the E port on the Pantry to the W port on the Kitchen.</p>
+
+<p>If you then go west from the Kitchen to the Pantry, Trizbort looks for a connection leading "westish" from the Kitchen to the Pantry. It considers all connections on the "west side" of the Pantry as "westish" including WNW, W and WSW, but not NW or SW. It doesn't care which side of the Pantry they arrive at. If it finds such a connection it will use it, marking it as two way if it was previously one way in the other direction. If it doesn't find one (say if you've moved or deleted the connection) it will make a new one leading from the W port on the Kitchen to the E port on the Pantry.</p>
+
+<p>So <span class="emphatic">you can move the start point of a connection without Trizbort making a new one, provided you keep it docked to a port on the same side of the room</span>. So you can move a south exit's start to SSE or SSW, but not to SW or SE; a north exit's start to NNE or NNW but not NE or NW; and so on.</p>
+
+<p><span class="emphatic">If the connection really is one way, Trizbort doesn't mind which of the second room's ports it goes to.</span> So a one way connection leading N from the Kitchen to the Hall should leave the Kitchen from either the NNW, N or NNE ports, but it can arrive at any port on the Hall.</p>
+
+<p><span class="emphatic">For purely in/out or up/down connections, Trizbort doesn't mind which port is used on either room</span>, so you can freely change these around.</p>
+
+<a name="help_export"></a>
+<h1>Exporting your Map</h1>
+
+<div class="tip">
+<div class="heading">Warning</div>
+<div class="body">
+<p>Be aware that exporting your map will replace the entire contents of the file created by the export process. If you've made changes to the resulting file(s), or if you choose to export over an existing file, whatever is in that file will be lost.</p>
+</div> <!-- tip body -->
+</div> <!-- tip -->
+
+<p>You can export your finished map as a <a href="http://en.wikipedia.org/wiki/Portable_Document_Format">PDF file</a> (a scalable document format), a <a href="http://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG image</a> (a picture format), or to an <a href="http://ifwiki.org/index.php/Authoring_system">IF development system</a> such as <a href="http://inform7.com">Inform 7</a>, <a href="http://www.tads.org">TADS</a> or <a href="http://www.inform-fiction.org/inform6.html">Inform 6</a>.</p>
+
+<a name="help_export_pdf"></a>
+<h2>Exporting to PDF</h2>
+
+<p>To export a scalable document containing your map, choose File->Export->PDF. Trizbort will create a PDF file with a single page, large enough to display your map without scaling. <a href="http://get.adobe.com/reader/">Adobe Acrobat Reader</a>, or a similar program, will be needed to view the PDF file.</p>
+
+<p>Trizbort uses <span class="term">vector graphics</span> to draw the map in the PDF file. This means that when viewing the PDF you can zoom in and out just as you would in Trizort without loss of quality.</p>
+
+<p>Trizbort will add generous margins around the edges of the map in order to avoid cutting off connections or text near the edges.</p>
+
+<a name="help_export_png"></a>
+<h2>Exporting a Picture</h2>
+
+<p>To export as a picture of your map in the form of a PNG image, choose File->Export->Image. Trizbort will create a picture of your map large enough to display it all without scaling. Most applications which can display or edit pictures can display PNG images.</p>
+
+<p>Trizbort will add generous margins around the edges of the map in order to avoid cutting off connections or text near the edges.</p>
+
+<a name="help_export_i7"></a>
+<h2>Exporting to Inform 7</h2>
+
+<p>To export to Inform 7, choose File->Export->Inform 7. Trizbort will prompt you for a file name. By default it will ask you for the name of a <span class="code">.inform</span> "file", but Inform 7 uses folders to represent its projects, and it is these folders which normally end with <span class="code">.inform</span>. So if you supply a filename, Trizbort will create a new Inform 7 project with the minimum contents necessary for Inform 7 to load the project as one of its own.</p>
+
+<p>You can just export a single text file rather than a whole project folder. To do so, in the "Export Inform 7 Source Code" dialog, go to the file type drop down list and change it from "Inform 7 Projects" to "Inform 7 Source Files" or "Text Files".</p>
+
+<table>
+<tr><td><img src="export_filetype.png" alt="Choosing a different file type in the export file dialog."></td></tr>
+<tr><td class="alt">Exporting a single Inform 7 source file rather than a whole project.</td></tr>
+</table>
+
+<p>If you have previously exported an Inform 7 project folder such as <span class="code">C:\Temp\MyMap.inform</span> and want to find the source file Trizbort saved for that project, you'll find it inside that folder, for example in <span class="code">C:\Temp\MyMap.inform\Source\Story.ni</span>. If you choose to export "Inform 7 Source Files" in the "Export Inform 7 Source Code" dialog you'll see this file if you view the "Source" folder.</p>
+
+<a name="help_export_tads"></a>
+<h2>Exporting to TADS</h2>
+
+<p>To export to TADS, choose File->Export->TADS. Trizbort will prompt you for a file name. By default it will ask you for the name of a <span class="code">.t</span> file. Trizbort isn't smart enough to create a whole TADS project on export.</p>
+
+<a name="help_export_i6"></a>
+<h2>Exporting to Inform 6</h2>
+
+<p>To export to Inform 6, choose File->Export->Inform 6. Trizbort will prompt you for a file name. By default it will ask you for the name of an <span class="code">.inf</span> file.</p>
+
+<a name="help_export_tips"></a>
+<h2>Export Tips</h2>
+
+<p>When exporting to an IF development system, Trizbort will do its best to do sensible things, such as not creating room or object names which the system won't like; giving each room and object a unique name even if they share the same name in Trizbort; and so on. It does its best to create source code which will build first time, but it's not as smart as the development system's it's exporting to and it doesn't know all the rules of their languages. Some exported code may not build without you doing a little work to keep the development system happy. The Inform 7 exporter is a little smarter than the TADS exporter in this regard (but not much.)</p>
+
+</div> <!-- help -->
+
+<!--#include virtual="../footer.inc" -->
+</div> <!-- bodycontainer -->
+<div class="domainbar bottomdomainbar">
+<div class="domainbar_indent">
+<!-- keep this on one line, since the bar is fixed height -->
+<span class="siteheading">&copy;&nbsp;2010-2015</span><div style="float: right; margin-top: 8px; margin-right: 10px;"><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Strict" style="border:0;width:88px;height:31px"></a><a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS"></a></div>
+</div>
+</div>
+</body>
+</html>

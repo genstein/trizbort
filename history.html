@@ -1,0 +1,161 @@
+<html>
+<head>
+<title>Trizbort, the Interactive Fiction Mapper</title>
+</head>
+
+<body>
+<h1>Trizbort, the Interactive Fiction Mapper</h1>
+<p><a href="/">Back to Main Page</a></p>
+<h2>History</h2>
+
+<h2>January 2015</h2>
+
+<p>Trizbort's documentation is now also open source, under the same license, at <a href="https://github.com/genstein/trizbort/tree/master/Docs">https://github.com/genstein/trizbort/tree/master/Docs</a>.</p>
+
+<h2>Version 1.2.1 - March 2013</h2>
+
+<p>Trizbort is now open source under the MIT license. The About box reflects the new license and links to github. The Donate window has been removed: since any contributions to me would not necessarily fund future developments now, it didn't seem fair! You can find the source code at <a href="http://github.com/genstein/trizbort">http://github.com/genstein/trizbort</a>.
+
+<h2>Version 1.2 - March 2011</h2>
+
+<h3>New Features</h3>
+
+<p><a href="/help/">Documentation</a>. An up to date guide explaining <a href="/help/">how to use Trizbort</a> is available online.
+
+<p>Automapping. Trizbort can now automatically generate maps given a game transcript.</p>
+
+<p>Export to Inform 7, TADS and Inform 6. You can now draft a game map in Trizbort and export it straight to your development system of choice (assuming it's one of these three :)</p>
+
+<p>No More Modes. There's now no such things as "Select" or "Draw Lines" modes. Instead you can draw a line whenever nothing is selected, and you can always select things. You can move rooms and their connections whenever any rooms are selected. You can resize a room or move a connection's end points whenever just that one room or connection is selected. See the <a href="/help/">documentation</a> for more details as to how this works.</p>
+
+<p>Room Descriptions. Each room can have an associated description. Use this however you like; automapping will do its best to fill it in automatically, and export to an IF development system will use the description if it can.</p>
+
+<p>Minimap. Trizbort now displays a miniature view of the whole map in the top right corner of the canvas, which you can click to scroll around the map.</p>
+
+<p>Scrolling. The canvas now supports scroll bars which can be used to scroll around the map. The cursor keys on the keyboard can now be used as well.</p>
+
+<p>View Entire Map. View->Entire Map or Ctrl+Home will center the whole map onscreen and zoom out until you can see everything.</p>
+
+<p>Select All/Select None. Available from the Edit menu. If nothing is selected, pressing Return will select and center on the room closest to the middle of the view.</p>
+
+<p>MRU list. The File menu now sports a list of the most recently used maps; click one to load the map.</p>
+
+<p>Last used folders are remembered. The last folder from which you loaded/saved a map, or exported each type of file, are remembered.</p>
+
+<h3>Changes</h3>
+
+<p>A new project setting allows you to set your preferred distance between rooms. Trizbort uses this during automapping whenever it adds already-connected rooms to the map.</p>
+
+<p>When a room is selected, its resize handles are accompanied by a bounding box.</p>
+
+<h3>Fixes</h3>
+
+<p>Better mouse cursor feedback. The mouse cursor shape now pretty accurately reflects what clicking the mouse will do; previously this was a bit hit and miss.</p>
+
+<p>Handles and ports no longer appear on an arbitrary room or connection when multiple things are selected.</p>
+
+<p>It used to be easy to drag the end point of a new (or existing) line quite close to a room but not quite close enough to dock it to a port on that room. It's now a lot harder, so it should be easier to make connections that stick with rooms as they move.</p>
+
+<p>When dragging out new connections, Trizbort no longer highlights things if dropping the connection onto them won't have any effect.</p>
+
+<p>There may have been some snap to grid issues with the top, bottom, left and right resize handles on rooms, w.r.t not always snapping to the grid in a sensible way when snap to grid is turned on. These should now be fixed.</p>
+
+<p>A few minor UI fixes such as tab ordering and menu item naming.</p>
+
+<p>A few operations did not work correctly with multiple selections, applying themselves only to the first selected item. These now apply to all items.</p>
+
+<p>Operations which do not apply to multiple selections are now disabled when multiple items are selected.</p>
+
+<h3>Known Issues</h3>
+
+<p>The mouse wheel zoom in/out still appears to be the wrong way
+round, at least with respect to every other application in the
+Universe. If this particularly bugs anyone, or if you
+particularly prefer it, let me know.</p>
+
+<h2>Version 1.1 - February 2011</h2>
+
+<h3>Changes</h3>
+
+<p>Directional connections are now called One Way Arrows. Their shortcut is now A rather than I, to make room for new shortcuts.</p>
+
+<p>The shortcut for dotted connections is now T, to make room for new shortcuts.</p>
+
+<p>The shortcut to toggle light/darkness is now K rather than D, to make room for new shortcuts.</p>
+
+<p>Navigation via the numeric keypad will now center on each room visited 
+rather than just ensuring it is visible onscreen.
+This makes things easier to follow on large maps.
+
+<h3>New Features</h3>
+
+<p>Multi-select. Drag the left mouse button around multiple rooms
+and/or connections to select them all at once. Many operations which
+applied previously to single selections now apply to multiple selections,
+including movement and deletion.
+This makes it easier to rearrange maps, make space for new rooms,
+render whole sections of the map dark, etc.</p>
+
+<p>Hold the Control key while selecting or dragging to add to the
+current selection without losing it. Hold the shift key whilst
+selecting or dragging to toggle between selected and deselected.
+For example, drag select the whole map, hold Shift and drag select
+any parts you don't want selected, then hold Control and reselect
+any stragglers who should be selected.</p>
+
+<p>The Edit->Line Styles menu and shortcuts make it easy to change 
+connection styles: quickly switch between plain (P), dotted (T), 
+one way arrow (A) and up/down/in/out (U/D/I/O) connections.
+Combinations (such as a dotted one way up/down connection) are
+still permitted. All these options can be applied to multiple
+selections.</p>
+
+<p>Moving a connection which leads off into space (rather than
+being entirely anchored between rooms) will now move all free
+floating end points of the line rather than doing nothing.</p>
+
+<p>The installer will add "Trizbort Map File" to new file menu
+in Windows (Explorer). A reboot may be required before Windows
+notices this new option. Advanced users may restart Explorer
+using the appropriate genuflections instead.</p>
+
+<p>Trizbort will now check for updates when it starts up, and
+inform you if there is a new version available. You can stop this
+by checking a box when first informed of a new version; it will then
+keep quiet until the next new version is released. You can
+manually check for updates from the Help menu.</p>
+
+<h3>Optimisations</h3>
+
+<p>Faster drawing. On screen, "hand drawn" lines are drawn as
+straight lines when zoomed out far enough to make little
+difference in appearance. In exported PDF and image files the
+map is still always drawn to the highest possibile quality. The
+formatting of each piece of text on the map is also now cached
+until it changes, rather than being recomputed each time the
+map is drawn.</p>
+
+<h3>Known Issues</h3>
+
+<p>The mouse wheel zoom in/out appears to be the wrong way
+round, at least with respect to every other application in the
+Universe. If this particularly bugs anyone, or if you
+particularly prefer it, let me know.</p>
+
+<h2>Version 1.0.1 - October 2010</h2>
+
+<h3>Fixes</h3>
+
+<p>Fixed an issue whereby on some computers Trizbort would consume 100% CPU time.</p>
+
+<h3>New Features</h3>
+
+<p>Keyboard navigation. You can now move around the map using the numeric keypad.
+Numeric keys move a la compass directions when a room is selected;
+hold Ctrl as well to create new connected rooms.</p>
+
+<h2>Version 1.0 - July 2010</h2>
+
+<p>The first release of Trizbort.</p>
+
+

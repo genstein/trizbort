@@ -1,46 +1,516 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
+<head>
+<!-- Assert that we are compliant with HTML 4.01 strict, above. This helps avoid browsers taking a wild stab at our intentions. -->
+<!-- In case our HTTP server fails to provided a Content Type header, assert that we are HTML encoded as UTF8. -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>Trizbort, the Interactive Fiction Mapper</title>
+<!--
+	By default, our page loads with all content visible, and no
+	navigation buttons, for people with Javascript sensibly
+	disabled.
+	The following script will show the navigation buttons, hide
+	all sections but the first one, and permit the navigation
+	buttons to be used to navigate between sections.
+-->
+<script type="text/javascript">
+<!--
+	// the list of sections in this document, by id (<div id="...">)
+	var sections =
+	[
+		'overview',
+		'media',
+		'download',
+		'help',
+		'feedback',
+	];
 
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Trizbort : Trizbort, the Interactive Fiction Mapper">
+	function hideExcept(sectionName) {
+		for (var index=0; index<sections.length; ++index) {
+			var currentName = sections[index];
+			var current = document.getElementById(currentName);
+			if (current) {
+				current.style.display = (currentName == sectionName) ? 'block' : 'none';
+			}
+		}
+	}
+	
+	// switch to the given section name, rendering it visible and all other sections invisible
+	function switchTo(sectionName) {
+		// first section is "http://site/", not "http://site/#foo"
+		if (sectionName === sections[0]) {
+			location = "/";
+			return;
+		}
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+		if ( !location.href.match(/help/i) ) {
+			// we're on the index page (case-insensitive)
+			if (sectionName === "help") {
+				// help is not on the index page
+				location = "/help/";
+				return;
+			}
+			// everything else is on this (the index) page
+		}
+		else
+		{
+			// we're not on the index page
+			if (sectionName === "help")
+			{
+				// assume we're already on the help page
+				return;
+			}
+			else
+			{
+				// everything else is on the index page
+				location = "/#" + sectionName;
+				return;
+			}
+		}
 
-    <title>Trizbort</title>
-  </head>
+		hideExcept(sectionName);
+		location.hash = sectionName;
+	}
+	
+	// safely register a function to run when the page loads
+	function registerOnLoad(func) {
+		var previous = window.onload;
+		if (typeof previous != 'function') {
+			// there is no previous onload handler
+			window.onload = func;
+		}
+		else {
+			// there is a previous onload handler:
+			// replace it with a new one
+			window.onload = function() {
+				if (previous) {
+					// call the old one first
+					previous();
+				}
+				// now call the new one
+				func();
+			}
+		}
+	}
 
-  <body>
+	registerOnLoad(function() {
+		if ( !location.href.match(/help/i) ) {
+			// our url contains "index" or ends with "net/" as in trizbort.genstein.net/
+			var currentName = location.hash;
+			if (currentName) {
+				// allow the location hash (e.g. "page.html#download") to navigate us to a section;
+				currentName = currentName.substring(1); // strip the '#' from e.g. '#download'
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/genstein/trizbort">View on GitHub</a>
-
-          <h1 id="project_title">Trizbort</h1>
-          <h2 id="project_tagline">Trizbort, the Interactive Fiction Mapper</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/genstein/trizbort/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/genstein/trizbort/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h2>
-<a id="trizbort--" class="anchor" href="#trizbort--" aria-hidden="true"><span class="octicon octicon-link"></span></a>Trizbort  ∴</h2>
-
-<h3>
-<a id="the-interactive-fiction-mapper" class="anchor" href="#the-interactive-fiction-mapper" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Interactive Fiction Mapper</h3>
-
-<p><strong>trizbort</strong> <strong>n.</strong> incantation causing a spatial shift. Easily confused with <strong>satchmoz</strong>, an incantation causing a shift in space.</p>
-
-<h3>
-<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h3>
+				// hide all sections except the current one
+				switchTo(currentName);
+			}
+			else {
+				// lacking a location hash, we start at the first section
+				currentName = sections[0];
+				hideExcept(currentName)
+			}
+			
+		}
+		
+		// show the navigation buttons
+		document.getElementById('navigation').style.display = 'block';
+		
+	})
+// -->
+</script>
+<!-- Common styles for the site -->
+<style type="text/css">
+html, body
+{
+	margin: 0px;
+	background-color: #000000;
+}
+.domainbar
+{
+	clear: both;
+	background-color: #570057;
+	color: #ccbb66;
+	float: left;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	text-align: left;
+	font-family: Georgia, Sans Serif;
+}
+.topdomainbar
+{
+	border-bottom: 4px solid #300030;
+}
+.bottomdomainbar
+{
+	border-top: 4px solid #300030;
+}
+.domainbar_indent
+{
+	padding-left: 12px;
+}
+.sitebacklink
+{
+	float: right;
+	padding-right: 20px;
+	text-decoration: none;
+	color: #ccbb66;
+}
+.sitebacklink:hover
+{
+	text-decoration: underline;
+}
+.sitebacklink:visited
+{
+	color: #ccbb66;
+}
+.areabar
+{
+	clear: both;
+	float: left;
+	width: 100%;
+	background-color: #000000;
+	color: #ffffff;
+	font-family: Palatino, Serif;
+	border-bottom: 1px solid #777777;
+}
+.siteheading
+{
+	font-family: Georgia, Sans Serif;
+	font-size: 16px;
+	font-weight: 100;
+	float: left;
+}
+.areabar_indent
+{
+	padding: 48px;
+}
+.areabar_superheading
+{
+	font-size: 50px;
+	font-weight: 400;
+	color: #ffffff;
+}
+.areabar_majorheading
+{
+	font-size: 25px;
+	font-weight: 100;
+	color: #909090;
+}
+.areabar_quote
+{
+	font-family: Palatino, Serif;
+	font-size: 12px;
+	font-weight: 100;
+	color: #505050;
+	padding-top: 4px;
+}
+.buttonbar
+{
+	overflow: hidden;			/* This chops off any overhanging divs */
+	clear: both;
+	width: 100%;
+	background-color: #a0a0a0;
+	display: none;
+	border-bottom: 1px solid #406090;
+	line-height: 40px;
+}
+.buttonbar_indent
+{
+	padding-left: 48px;
+	padding-right: 0px;
+	padding-top: 10px;
+	padding-bottom: 0px;
+}
+a.button:link
+{
+	color: #c0c0c0;
+	background-color: #406090;
+	text-decoration: none;
+	font-variant: small-caps;
+	padding: 10px;
+	border-left: 1px solid #204070;
+	border-right: 1px solid #204070;
+	border-top: 1px solid #204070;
+}
+a:link
+{
+	color: #406090;
+	text-decoration: underline;
+}
+a:link:visited
+{
+	color: #570057;
+}
+a:link:hover
+{
+	color: #ccbb66;
+}
+a:link:active
+{
+}
+a.button:link:hover
+{
+	color: #ffffff;
+}
+a.button:link:active
+{
+	color: #ffffff;
+}
+a.button:link:visited
+{
+	color: #c0c0c0;
+}
+.bodycontainer
+{
+	background-color: #ffffff;
+	padding-top: 0px;
+	padding-bottom: 24px;
+	clear: both;
+	font-family: Georgia, Serif;
+	font-size: 14px;
+	line-height: 22px;
+}
+.floatingmapfragment
+{
+	float: right;
+	padding-right: 48px;
+}
+	/* body text which is not columnar needs this padding */
+	.indent_without_columns
+	{
+		padding-left: 48px;
+		padding-right: 25%;
+	}
+	/* body text which is columnar needs this padding */
+	.indent_column
+	{
+		padding-left: 48px;
+		padding-right: 48px;
+	}
+	/* column container */
+	.colmask {
+		clear:both;
+		float:left;
+		width:100%;					/* width of whole page */
+		overflow: hidden;			/* This chops off any overhanging divs */
+		padding-left: 0px;
+		padding-right: 0px;
+		padding-top: 0px;
+		padding-bottom: 0px;
+	}
+	/* common column settings */
+	.colright,
+	.colmid,
+	.colleft {
+		float:left;
+		width:100%;
+		position:relative;
+	}
+	.col1,
+	.col2,
+	.col3 {
+		float:left;
+		position:relative;
+		padding: 0px;
+		overflow:hidden;
+	}
+	/* 2 Column (double page) settings */
+	.doublepage {
+		background:#eee;		/* right column background colour */
+	}
+	.doublepage .colleft {
+		right:50%;				/* right column width */
+		background:#fff;		/* left column background colour */
+	}
+	.doublepage .col1 {
+		width:50%;				/* left column content width (column width minus left and right padding) */
+		left:50%;				/* right column width plus left column left padding */
+	}
+	.doublepage .col2 {
+		width:50%;				/* right column content width (column width minus left and right padding) */
+		left:50%;				/* (right column width) plus (left column left and right padding) plus (right column left padding) */
+	}
+h1
+{
+	color: #406090;
+	font-family: Palatino, Serif;
+	font-size: 30px;
+	font-weight: 400;
+	margin: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 40px;
+	padding-bottom: 5px;
+}
+h2
+{
+	color: #406090;
+	font-family: Palatino, Serif;
+	font-size: 20px;
+	font-weight: 400;
+	margin: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 20px;
+	padding-bottom: 5px;
+}
+h3
+{
+	color: #406090;
+	font-family: Palatino, Serif;
+	font-size: 16px;
+	font-weight: 400;
+	margin: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 20px;
+	padding-bottom: 5px;
+}
+h4
+{
+	color: #406090;
+	font-family: Palatino, Serif;
+	font-size: 14px;
+	font-weight: 400;
+	margin: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 20px;
+	padding-bottom: 5px;
+}
+table
+{
+	border: 1px solid black;
+	border-collapse: collapse;
+	font-size: 14px;
+}
+td
+{
+	padding: 6px;
+	border: 1px solid black;
+}
+td.alt
+{
+	background-color: #e0e0d0;
+}
+td.heading
+{
+	border-bottom: 1px solid white;
+	background-color: #5070a0;
+	color: white;
+	text-align: center;
+}
+td.altheading
+{
+	border-bottom: 1px solid white;
+	background-color: #305080;
+	color: white;
+	text-align: center;
+}
+li
+{
+	margin: 4px 0px 4px 0px;
+}
+pre
+{
+	font-size: 11px;
+	font-family: Consolas, Courier New, Courier, Serif;
+	line-height: 14px;
+}
+.footnote
+{
+	font-size: 10px;
+}
+.tip
+{
+	float: right;
+	clear: both;                /* don't put tips next to each other */
+	border: 2px solid #b0b090;
+	background-color: #e0e0d0;
+	color: black;
+	padding: 0px;
+	margin-left: 10px;          /* spacing between the tip and text which flows to its left */
+	margin-top: 5px;
+	margin-bottom: 5px;        /* spacing between stacked tips, if any */
+	width: 300px;
+}
+.tip .heading
+{
+	background-color: #305080;
+	color: white;
+	font-variant: small-caps;
+	font-weight: bold;
+	padding: 2px;
+	text-align: center;
+}
+.tip .body
+{
+	padding: 0px 8px 8px 8px;
+}
+.tip p
+{
+	padding: 0px;
+	margin: 5px 0px 0px 0px;
+}
+.tip .quote
+{
+	background-color: white;
+	color: black;
+	border: 1px solid #b0b090;
+	padding: 2px;
+	line-height: 23px;
+}
+.term
+{
+	font-style: italic;
+}
+.emphatic
+{
+	/* for emphasising key phrases in a paragraph; blanked since any changes appear be ugly as hell or just too emphatic; ho well. */
+}
+.code
+{
+	background-color: white;
+	color: black;
+	border: 1px solid #b0b090;
+	padding: 2px;
+	line-height: 23px;
+	font-family: Consolas, Courier New, Courier, Serif;
+	font-size: 12px;
+}
+</style>
+</head>
+<body>
+<div class="domainbar topdomainbar">
+<div class="domainbar_indent">
+&nbsp;
+</div>
+</div>
+<div class="areabar">
+<div class="areabar_indent">
+<span class="areabar_superheading">Trizbort</span><span class="areabar_quote">&nbsp;&nbsp;&there4;</span><br>
+<span class="areabar_majorheading">The Interactive Fiction Mapper</span><br>
+<span class="areabar_quote"><i>trizbort <strong>n.</strong></i> incantation causing a spatial shift. Easily confused with <i>satchmoz</i>, an incantation causing a shift in space.</span>
+</div>
+</div>
+<div class="buttonbar" id="navigation">
+<div class="buttonbar_indent">
+<a class="button" href="javascript:switchTo('overview')">&gt; Restart</a>
+<a class="button" href="javascript:switchTo('media')">&gt; Examine Trizbort</a>
+<a class="button" href="javascript:switchTo('download')">&gt; Get Trizbort</a>
+<a class="button" href="javascript:switchTo('help')">&gt; Help</a>
+<a class="button" href="javascript:switchTo('feedback')">&gt; Hello, Sailor</a>
+</div>
+</div>
+<div class="bodycontainer">
+<div id="overview">
+<a name="overview"></a>
+<div class="colmask doublepage">
+<div class="colleft">
+<div class="col1">
+<div class="indent_column">
+<h1>Overview</h1>
 
 <p>Trizbort is a simple tool which can be used to create maps for <a href="http://en.wikipedia.org/wiki/Interactive_fiction">interactive fiction</a>.</p>
 
@@ -51,33 +521,168 @@
 <p>Features include:</p>
 
 <ul>
-<li>A simple point and click interface to create rooms, resize them and connect them together;</li>
-<li>Smart* lines which snap to the cardinal** points on room edges;</li>
-<li>Rooms can be marked as dark or light; dark rooms on the map have shaded corners;</li>
-<li>A list of objects per room, which can be "docked" to any room edge or placed inside the room;</li>
-<li>Customisable colours, fonts and drawing styles;</li>
-<li>A "hand-drawn" line style for that back-of-an-envelope feel;</li>
-<li>Title, description and author text which will be saved with the map;</li>
-<li>Export to PDF files and PNG images for posterity or printing;</li>
-<li>Multiple selection;</li>
-<li>Single keypress keyboard shortcuts;</li>
-<li>An XML file format in case other tools wish to generate or read Trizbort maps.</li>
+<li>A simple point and click interface to create rooms, resize them and connect them together;
+<li>Smart* lines which snap to the cardinal** points on room edges;
+<li>Rooms can be marked as dark or light; dark rooms on the map have shaded corners;
+<li>A list of objects per room, which can be "docked" to any room edge or placed inside the room;
+<li>Customisable colours, fonts and drawing styles;
+<li>A "hand-drawn" line style for that back-of-an-envelope feel;
+<li>Title, description and author text which will be saved with the map;
+<li>Export to PDF files and PNG images for posterity or printing;
+<li>Multiple selection;
+<li>Single keypress keyboard shortcuts;
+<li>An XML file format in case other tools wish to generate or read Trizbort maps.
 </ul>
 
-<p>* Not that smart.
-** More or less cardinal. In fact Trizbort adds some decidedly non-cardinal points to make things easier.</p>
-      </section>
-    </div>
+<p>* <span class="footnote">Not that smart.</span><br>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Trizbort maintained by <a href="https://github.com/genstein">genstein</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
+** <span class="footnote">More or less cardinal. In fact Trizbort adds some decidedly non-cardinal points to make things easier.</span></p>
+</div> <!-- indent_column -->
+</div> <!-- col1 -->
+<div class="col2">
+<div class="indent_column">
+<h1>Latest News</h1>
 
-    
+<h2>January 18th, 2015</h2>
 
-  </body>
+<p>Trizbort's documentation is now also open source, under the same license, at <a href="https://github.com/genstein/trizbort/tree/master/Docs">https://github.com/genstein/trizbort/tree/master/Docs</a>.</p>
+
+<p>Some people are working on forks of Trizbort: you may find them via <a href="https://github.com/genstein/trizbort/network">GitHub</a> or search the <a href="http://intfiction.org/forum">Interactive Fiction Community Forum</a>.
+
+<h2>March 16th, 2013</h2>
+
+<p>Trizbort is now open source! The latest version is now 1.2.1 which is largely identical to 1.2 except for About box changes and the lack of a Donate window (which didn't seem quite right in light of the change, as that was donating to me personally). It is now licensed under the MIT License. You can now find the source code at <a href="http://github.com/genstein/trizbort">http://github.com/genstein/trizbort</a>.</p>
+
+<h2>March 13th, 2011</h2>
+
+<p>Version 1.2 has been released. This is a major update to Trizbort. The <a href="history.html">full release notes</a>
+are online, but most significantly:</p>
+<ul>
+<li><a href="/help/">A complete user guide</a> to Trizbort is now online.
+<li>Trizbort now supports automapping from game transcripts.
+<li>You can now export your maps to Inform 7, TADS and Inform 6.
+<li>No more modes! You can now draw connections whenever nothing is selected, and you can always select things.
+<li>A "minimap" gives you an overview of your whole map, and you can click and drag it to scroll around.
+<li>Scroll bars finally make an appearance on the canvas, and the cursor keys now work too.
+<li>The File menu sports a list of recently used maps, and your most recent save/export folders are remembered.
+</ul>
+
+<h2>February 18th, 2011</h2>
+
+<p>Version 1.1 has been released. The <a href="history.html">full release notes</a>
+are online, but most significantly:</p>
+<ul>
+<li>Trizbort now supports selecting multiple rooms and connections at the same time and many operations now work on such selections.
+<li>New keyboard shortcuts and menu options make it easier to change connection (line) styles.
+<li>The installer also adds a "Trizbort Map File" template to Windows Explorer so you can create new maps and then double click them to open Trizbort.
+<li>Drawing optimizations should also mean that large maps will display a little faster.
+</ul>
+
+<h2>October 12th, 2010</h2>
+
+<p>Version 1.0.1 has been released, fixing a bug reported by several people which could cause Trizbort to use 100% CPU time even when idle. Trizbort tries quite enthusiastically to update its menu and toolbars to make sure everything is checked or greyed out as appropriate, and it was getting a little over zealous to say the least.</p>
+</div> <!-- indent_column -->
+</div> <!-- col2 -->
+</div> <!-- colleft -->
+</div> <!-- colmask doublepage -->
+</div> <!-- overview -->
+<div id="media" class="indent_without_columns">
+<a name="media"></a>
+<h1>Screenshots</h1>
+
+<p>Click any thumbnail to view a larger image.</p>
+
+<p>
+<a href="shot1.png"><img src="shot1_thumb.png" alt="Screenshot"></a>
+<a href="shot2.png"><img src="shot2_thumb.png" alt="Screenshot"></a>
+<a href="shot3.png"><img src="shot3_thumb.png" alt="Screenshot"></a>
+<a href="shot4.png"><img src="shot4_thumb.png" alt="Screenshot"></a>
+</p>
+
+<h1>Sample Maps</h1>
+
+<p><strong>Spoiler Alert: </strong>Viewing these samples may spoil your enjoyment of the games involved. There are a lot of clues in the maps, to say the least.</p>
+
+<ul>
+<li>Complete map of Planetfall <a href="Planetfall.trizbort">(Trizbort, 28k)</a> <a href="planetfall_map.pdf">(PDF, 25k)</a> <a href="planetfall_map.png">(PNG, 1.3mb)</a>
+</ul>
+</div> <!-- media -->
+<div id="download" class="indent_without_columns">
+<a name="download"></a>
+<h1>Download</h1>
+
+<p>The latest version of Trizbort is version 1.2.1 You can <a href="history.html">view the full list of changes</a> here.</p>
+
+<h2>Version 1.2.1 for Windows</h2>
+
+<table><tr><td>
+<a href="Trizbort121.zip"><img src="zip.png" alt="Zip File"></a>
+</td></tr><tr><td>
+<a href="Trizbort121.zip">Trizbort v1.2.1 Zip File (328k)</a>
+</td></tr></table>
+
+<p>Trizbort requires the <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5">.NET Framework version 2</a> or higher to run. If you have a recent version of Windows you likely have this already.</p>
+
+<p>If you have a previous version of Trizbort installed, you should uninstall it prior to installing the new version.</p>
+
+<h2>Previous Version: 1.2 for Windows</h2>
+
+<table><tr><td>
+<a href="TrizbortSetup120.exe"><img src="setup.png" alt="Setup"></a>
+</td><td>
+<a href="Trizbort120.zip"><img src="zip.png" alt="Zip File"></a>
+</td></tr><tr><td>
+<a href="TrizbortSetup120.exe">Trizbort v1.2 Installer (560k)</a>
+</td><td>
+<a href="Trizbort120.zip">Trizbort v1.2 Zip File (290k)</a>
+</td></tr></table>
+
+<p>Trizbort requires the <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5">.NET Framework version 2</a> or higher to run. If you have a recent version of Windows you likely have this already.</p>
+
+<p>If you have a previous version of Trizbort installed, you should uninstall it prior to installing the new version.</p>
+
+<h2>Mac, Linux</h2>
+
+<p>Unfortunately there is no Mac or Linux version of Trizbort at this time.</p>
+
+<p>Some users have reported success running Trizbort under Wine using Mono.</p>
+
+<h1>License</h1>
+
+<p>Trizbort v1.2.1 is licensed under the <a href="https://github.com/genstein/trizbort/blob/master/LICENSE.txt">MIT License</a>.</p>
+
+<p>Trizbort v1.2 and earlier are licensed under the <a href="http://creativecommons.org/licenses/by-nc-nd/2.0/uk/">Creative Commons Attribution-Non-Commercial-No Derivative Works 2.0 UK: England & Wales Licence</a>.</p>
+
+<p>Trizbort makes use of <a href="http://www.pdfsharp.com">PDFsharp</a>, copyright (c) 2005-2007 empira Software GmbH, Cologne (Germany).</p>
+</div> <!-- download -->
+<div id="help" class="indent_without_columns">
+<a name="help"></a>
+<h1>Using Trizbort</h1>
+
+<p><a href="/help/">A guide to using Trizbort</a> is available.</p>
+
+</div> <!-- help -->
+<div id="feedback" class="indent_without_columns">
+<a name="feedback"></a>
+<h1>Contact</h1>
+
+<p>Trizbort was created by Genstein in 2010 and 2011. Not a lot happened to it in 2012, but purportedly there are plenty of people using it right now.</p>
+
+<h2>Feedback</h2>
+
+<p>Flames, questions, stylish maps for this page, and anything else vaguely related to Trizbort can be sent to <a href="http://www.google.com/recaptcha/mailhide/d?k=01XQEnuJLPVEm7kDYSz_h_oQ==&amp;c=X3YXHF2CPVgt4IphTyRKsxArd-_4j9P_38kR9NBciwc=">this address</a>.</p>
+
+<h2>Donations</h2>
+
+<p>Now that Trizbort is open source I am no longer accepting donations via this website. Please give to a charity of your choice instead. Thank you.</p>
+
+</div> <!-- feedback -->
+</div> <!-- bodycontainer -->
+<div class="domainbar bottomdomainbar">
+<div class="domainbar_indent">
+<!-- keep this on one line, since the bar is fixed height -->
+<span class="siteheading">&copy;&nbsp;2010-2015</span><div style="float: right; margin-top: 8px; margin-right: 10px;"><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Strict" style="border:0;width:88px;height:31px"></a><a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS"></a></div>
+</div>
+</div>
+</body>
 </html>
