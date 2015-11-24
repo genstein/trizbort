@@ -39,7 +39,7 @@
 	function switchTo(sectionName) {
 		// first section is "http://site/", not "http://site/#foo"
 		if (sectionName === sections[0]) {
-			location = "/";
+			location = "/trizbort";
 			return;
 		}
 
@@ -47,7 +47,7 @@
 			// we're on the index page (case-insensitive)
 			if (sectionName === "help") {
 				// help is not on the index page
-				location = "/help/";
+				location = "/trizbort/help/";
 				return;
 			}
 			// everything else is on this (the index) page
@@ -63,7 +63,7 @@
 			else
 			{
 				// everything else is on the index page
-				location = "/#" + sectionName;
+				location = "/trizbort/#" + sectionName;
 				return;
 			}
 		}
