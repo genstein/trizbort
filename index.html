@@ -37,17 +37,11 @@
 	
 	// switch to the given section name, rendering it visible and all other sections invisible
 	function switchTo(sectionName) {
-		// first section is "http://site/", not "http://site/#foo"
-		if (sectionName === sections[0]) {
-			location = "/trizbort";
-			return;
-		}
-
 		if ( !location.href.match(/help/i) ) {
 			// we're on the index page (case-insensitive)
 			if (sectionName === "help") {
 				// help is not on the index page
-				location = "/trizbort/help/";
+				location = "help/";
 				return;
 			}
 			// everything else is on this (the index) page
@@ -63,7 +57,14 @@
 			else
 			{
 				// everything else is on the index page
-				location = "/trizbort/#" + sectionName;
+
+				// first section is "http://site/", not "http://site/#foo"
+				if (sectionName === sections[0]) {
+					location = "../";
+					return;
+				}
+
+				location = "../#" + sectionName;
 				return;
 			}
 		}
